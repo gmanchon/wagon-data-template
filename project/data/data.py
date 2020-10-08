@@ -5,7 +5,7 @@ import os
 
 
 def get_data(nrows):
-    project_root = os.path.dirname(os.path.dirname(__file__))
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     data_path = os.path.join(project_root, "data", "data.csv")
     df = pd.read_csv(data_path, nrows=nrows)
     return df

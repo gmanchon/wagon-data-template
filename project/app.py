@@ -1,6 +1,6 @@
 
 
-from project.trainer import Trainer
+from project.trainer.trainer import Trainer
 
 import pandas as pd
 
