@@ -20,7 +20,7 @@ class App:
         project_path = os.path.dirname(os.path.dirname(__file__))
         self.data_path = os.path.join(project_path, "data", "data.csv")
 
-        print(Fore.GREEN + "Loading trainer...\n"
+        print(Fore.GREEN + "Loading trainer..."
               + Style.RESET_ALL)
 
         # instanciating trainer
@@ -29,7 +29,7 @@ class App:
     def fetch(self, nrows=1_000):
 
         # fetching data
-        print(Fore.GREEN + "Fetching %s lines from %s data 🚀"
+        print(Fore.GREEN + "\nFetching %s lines from %s data 🚀"
               % (nrows, self.data)
               + Style.RESET_ALL)
 
@@ -49,7 +49,7 @@ class App:
         # reading local data
         df = pd.read_csv(self.data_path, nrows=nrows)
 
-        print(Fore.GREEN + "Dataset:\n"
+        print(Fore.GREEN + "\nDataset:\n"
               + Style.RESET_ALL
               + "%s" % df.head(nrows))
 
