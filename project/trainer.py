@@ -1,7 +1,7 @@
 
 from project.data import get_data, clean_df
 from project.pipeline import ProjectPipeline
-from project.utils import compute_rmse
+from project.metrics import compute_rmse
 
 from sklearn.model_selection import train_test_split
 
