@@ -2,3 +2,6 @@ numpy
 pandas
 sklearn
 joblib
+colorama
+fsspec
+s3fs
