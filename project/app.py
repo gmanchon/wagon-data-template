@@ -82,10 +82,10 @@ class App:
 
 def main():
 
-    n_rows = 1_000
+    n_rows = 10
 
     app = App()
-    app.fetch(n_rows)
+    # app.fetch(n_rows)
     app.head(n_rows)
     app.preprocess(n_rows)
     app.train(n_rows)

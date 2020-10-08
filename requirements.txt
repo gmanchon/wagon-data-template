@@ -1,7 +1,9 @@
 numpy
 pandas
+fsspec
+s3fs
+pygeohash
+category_encoders
 sklearn
 joblib
 colorama
-fsspec
-s3fs

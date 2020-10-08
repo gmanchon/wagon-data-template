@@ -27,7 +27,8 @@ class Trainer():
         cols = ["pickup_latitude",
                 "pickup_longitude",
                 "dropoff_latitude",
-                "dropoff_longitude"]
+                "dropoff_longitude",
+                "pickup_datetime"]
 
         y = df["fare_amount"]
         X = df[cols]
