@@ -12,12 +12,19 @@ import os
 class App:
 
     def __init__(self):
+
         # data source
         self.data = "s3://wagon-public-datasets/taxi-fare-train.csv"
 
         # data storage
         project_path = os.path.dirname(os.path.dirname(__file__))
         self.data_path = os.path.join(project_path, "data", "data.csv")
+
+        print(Fore.GREEN + "Loading trainer...\n"
+              + Style.RESET_ALL)
+
+        # instanciating trainer
+        self.trainer = Trainer()
 
     def fetch(self, nrows=1_000):
 
@@ -41,21 +48,30 @@ class App:
 
         # reading local data
         df = pd.read_csv(self.data_path, nrows=nrows)
-        print(df.head(nrows))
+
+        print(Fore.GREEN + "Dataset:\n"
+              + Style.RESET_ALL
+              + "%s" % df.head(nrows))
+
+        return self
+
+    def preprocess(self):
+
+        print(Fore.GREEN + "\nPreprocessing model..."
+              + Style.RESET_ALL)
+
+        # running trainer
+        self.trainer.preprocess()
 
         return self
 
     def train(self):
 
-        print("Loading trainer...")
-
-        # instanciating trainer
-        trainer = Trainer()
-
-        print("Training model...")
+        print(Fore.GREEN + "\nTraining model..."
+              + Style.RESET_ALL)
 
         # running trainer
-        rmse = trainer.train()
+        rmse = self.trainer.train()
 
         print(Fore.GREEN + "Model trained, rmse: %s 👍"
               % rmse
@@ -66,8 +82,8 @@ class App:
 
 def main():
     app = App()
-    app.fetch().head()
-    app.train()
+    app.head().preprocess()
+    app.fetch().train()
 
 
 if __name__ == '__main__':
