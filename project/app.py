@@ -26,7 +26,7 @@ class App:
         # instanciating trainer
         self.trainer = Trainer()
 
-    def fetch(self, nrows=1_000):
+    def fetch(self, nrows):
 
         # fetching data
         print(Fore.GREEN + "\nFetching %s lines from %s data 🚀"
@@ -44,7 +44,7 @@ class App:
 
         return self
 
-    def head(self, nrows=1_000):
+    def head(self, nrows):
 
         # reading local data
         df = pd.read_csv(self.data_path, nrows=nrows)
@@ -55,23 +55,23 @@ class App:
 
         return self
 
-    def preprocess(self):
+    def preprocess(self, nrows):
 
         print(Fore.GREEN + "\nPreprocessing model..."
               + Style.RESET_ALL)
 
         # running trainer
-        self.trainer.preprocess()
+        self.trainer.preprocess(nrows)
 
         return self
 
-    def train(self):
+    def train(self, nrows):
 
         print(Fore.GREEN + "\nTraining model..."
               + Style.RESET_ALL)
 
         # running trainer
-        rmse = self.trainer.train()
+        rmse = self.trainer.train(nrows)
 
         print(Fore.GREEN + "Model trained, rmse: %s 👍"
               % rmse
@@ -81,9 +81,14 @@ class App:
 
 
 def main():
+
+    n_rows = 1_000
+
     app = App()
-    app.head().preprocess()
-    app.fetch().train()
+    app.fetch(n_rows)
+    app.head(n_rows)
+    app.preprocess(n_rows)
+    app.train(n_rows)
 
 
 if __name__ == '__main__':

@@ -16,10 +16,10 @@ class Trainer():
         # self.X_train, self.X_test, self.y_train, self.y_test
         pass
 
-    def __get_training_data(self):
+    def __get_training_data(self, nrows):
 
         # get data
-        df = get_data()
+        df = get_data(nrows)
         df = clean_df(df)
 
         # get X and y
@@ -37,14 +37,14 @@ class Trainer():
                              test_size=0.1,
                              random_state=42)
 
-    def preprocess(self):
+    def preprocess(self, nrows):
         """
         shows input and output of each steps of the pipeline
         runs all the steps of the pipeline except for the estimator
         """
 
         # retrieve training data
-        self.__get_training_data()
+        self.__get_training_data(nrows)
 
         # create pipeline
         self.pipeline = ProjectPipeline().create_pipeline()
@@ -65,14 +65,14 @@ class Trainer():
                   + Style.RESET_ALL
                   + "%s" % X_tmp)
 
-    def train(self):
+    def train(self, nrows):
         """
         trains the model
         runs all the steps of the pipeline
         """
 
         # retrieve training data
-        self.__get_training_data()
+        self.__get_training_data(nrows)
 
         # create pipeline
         self.pipeline = ProjectPipeline().create_pipeline()
