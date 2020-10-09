@@ -28,9 +28,11 @@ class Trainer(MLFlowBase):
         # getting training parameters
         self.params = params
         self.params['estimator'] = params.get('estimator', 'randomforest')
-        # self.params['distance'] = params.get('distance', 'euclidian')
+        self.params['distance'] = params.get('distance', 'euclidian')
 
-        print(params)
+        print(Fore.GREEN + "\nTrainer parameters:\n"
+              + Style.RESET_ALL
+              + "%s" % params)
 
     def __get_training_data(self, nrows):
 
