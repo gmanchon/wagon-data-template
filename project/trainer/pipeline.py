@@ -65,9 +65,11 @@ class ProjectPipeline():
 
         time_columns = ["pickup_datetime"]
 
-        # getting distance params
+        # getting params
         distance_params = self.pipeline.get('distance', dict())
         dt_params = {**distance_params, **distance_arguments}
+
+        time_params = self.pipeline.get('time', dict())
 
         pipe_distance = make_pipeline(
             DistanceTransformer(**dt_params),
@@ -86,7 +88,7 @@ class ProjectPipeline():
             RobustScaler())
 
         pipe_time = make_pipeline(
-            TimeTransformer(time_column='pickup_datetime'),
+            TimeTransformer(time_column='pickup_datetime', **time_params),
             OneHotEncoder(handle_unknown='ignore'))
 
         transformers = [

@@ -89,12 +89,20 @@ class App:
 
 def main():
 
-    params = dict(data=dict(nrows=10),
-                  trainer=dict(estimator='randomforest',
-                               hyperparams=dict(n_estimators=100,
-                                                max_depth=10,
-                                                n_jobs=-1),
-                               pipeline=dict(distance=dict(type="haversine"))))
+    params = dict(
+        data=dict(
+            nrows=10),
+        trainer=dict(
+            estimator='randomforest',
+            hyperparams=dict(
+                n_estimators=100,
+                max_depth=10,
+                n_jobs=-1),
+            pipeline=dict(
+                distance=dict(
+                    type="haversine"),
+                time=dict(
+                    zone="America/New_York"))))
 
     app = App(params)
     # app.fetch()
