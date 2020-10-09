@@ -25,19 +25,25 @@ class Trainer(MLFlowBase):
         # calling mother class init
         super().__init__(experiment_name, mlflow_url)
 
-        # getting training parameters
+        # getting params
         self.params = params
-        self.params['estimator'] = params.get('estimator', 'randomforest')
-        self.params['distance'] = params.get('distance', 'euclidian')
+
+        # getting trainer parameters
+        trainer_params = self.params.get('trainer', dict())
+        self.estimator = trainer_params.get('estimator', 'randomforest')
+
+        # getting data params
+        data_params = self.params.get('data', dict())
+        self.nrows = data_params.get('nrows', 1_000)
 
         print(Fore.GREEN + "\nTrainer parameters:\n"
               + Style.RESET_ALL
               + "%s" % params)
 
-    def __get_training_data(self, nrows):
+    def __get_training_data(self):
 
         # get data
-        df = get_data(nrows)
+        df = get_data(self.nrows)
         df = clean_df(df)
 
         # get X and y
@@ -56,14 +62,14 @@ class Trainer(MLFlowBase):
                              test_size=0.1,
                              random_state=42)
 
-    def preprocess(self, nrows):
+    def preprocess(self):
         """
         shows input and output of each steps of the pipeline
         runs all the steps of the pipeline except for the estimator
         """
 
         # retrieve training data
-        self.__get_training_data(nrows)
+        self.__get_training_data()
 
         # create pipeline
         self.pipeline = ProjectPipeline(self.params).create_pipeline()
@@ -84,14 +90,14 @@ class Trainer(MLFlowBase):
                   + Style.RESET_ALL
                   + "%s" % X_tmp)
 
-    def train(self, nrows):
+    def train(self):
         """
         trains the model
         runs all the steps of the pipeline
         """
 
         # retrieve training data
-        self.__get_training_data(nrows)
+        self.__get_training_data()
 
         # create pipeline
         self.pipeline = ProjectPipeline(self.params).create_pipeline()
@@ -100,8 +106,8 @@ class Trainer(MLFlowBase):
         self.mlflow_create_run()
 
         # push params to mlflow
-        self.mlflow_log_param('model', self.params['estimator'])
-        self.mlflow_log_param('distance', self.params['distance'])
+        self.mlflow_log_param('rows', self.nrows)
+        self.mlflow_log_param('model', self.estimator)
 
         # train
         self.pipeline.fit(self.X_train, self.y_train)

@@ -13,6 +13,13 @@ class App:
 
     def __init__(self, params):
 
+        # getting params
+        self.params = params
+
+        # getting data params
+        data_params = self.params.get('data', dict())
+        self.nrows = data_params.get('nrows', 1_000)
+
         # data source
         self.data = "s3://wagon-public-datasets/taxi-fare-train.csv"
 
@@ -26,14 +33,14 @@ class App:
         # instanciating trainer
         self.trainer = Trainer(params)
 
-    def fetch(self, nrows):
+    def fetch(self):
 
         # fetching data
         print(Fore.GREEN + "\nFetching %s lines from %s data 🚀"
-              % (nrows, self.data)
+              % (self.nrows, self.data)
               + Style.RESET_ALL)
 
-        df = pd.read_csv(self.data, nrows=nrows)
+        df = pd.read_csv(self.data, nrows=self.nrows)
 
         # saving data locally
         df.to_csv(self.data_path)
@@ -44,34 +51,34 @@ class App:
 
         return self
 
-    def head(self, nrows):
+    def head(self):
 
         # reading local data
-        df = pd.read_csv(self.data_path, nrows=nrows)
+        df = pd.read_csv(self.data_path, nrows=self.nrows)
 
         print(Fore.GREEN + "\nDataset:\n"
               + Style.RESET_ALL
-              + "%s" % df.head(nrows))
+              + "%s" % df.head(self.nrows))
 
         return self
 
-    def preprocess(self, nrows):
+    def preprocess(self):
 
         print(Fore.GREEN + "\nPreprocessing model..."
               + Style.RESET_ALL)
 
         # running trainer
-        self.trainer.preprocess(nrows)
+        self.trainer.preprocess()
 
         return self
 
-    def train(self, nrows):
+    def train(self):
 
         print(Fore.GREEN + "\nTraining model..."
               + Style.RESET_ALL)
 
         # running trainer
-        rmse = self.trainer.train(nrows)
+        rmse = self.trainer.train()
 
         print(Fore.GREEN + "Model trained, rmse: %s 👍"
               % rmse
@@ -82,14 +89,14 @@ class App:
 
 def main():
 
-    n_rows = 10
-    params = dict()
+    params = dict(data=dict(n_rows=10),
+                  trainer=dict(estimator='linear'))
 
     app = App(params)
-    # app.fetch(n_rows)
-    app.head(n_rows)
-    app.preprocess(n_rows)
-    app.train(n_rows)
+    # app.fetch()
+    app.head()
+    app.preprocess()
+    app.train()
 
 
 if __name__ == '__main__':

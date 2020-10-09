@@ -25,11 +25,17 @@ from sklearn.pipeline import Pipeline, make_pipeline
 class ProjectPipeline():
 
     def __init__(self, params):
+
+        # getting params
         self.params = params
+
+        # getting trainer parameters
+        trainer_params = self.params.get('trainer', dict())
+        self.estimator = trainer_params.get('estimator', 'randomforest')
 
     def create_estimator(self):
 
-        estimator = self.params['estimator']
+        estimator = self.estimator
 
         if estimator == 'linear':
             return LinearRegression()
