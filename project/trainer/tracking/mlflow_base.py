@@ -4,6 +4,8 @@ from memoized_property import memoized_property
 import mlflow
 from mlflow.tracking import MlflowClient
 
+from collections.abc import Mapping
+
 
 class MLFlowBase():
 
@@ -36,3 +38,15 @@ class MLFlowBase():
     def mlflow_log_metric(self, key, value):
         self.mlflow_client \
             .log_metric(self.mlflow_run.info.run_id, key, value)
+
+    def mlflow_log_dict_param(self, dict, radix):
+
+        # iterate through dictionary
+        key_radix = "%s__" % radix
+        for key, value in dict.items():
+            if isinstance(value, Mapping):
+                # iterate recursively through sub dictionary
+                self.mlflow_log_dict_param(value, key_radix + key)
+            else:
+                # other datatypes are convertd to their string representation
+                self.mlflow_log_param(key_radix + key, value)

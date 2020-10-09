@@ -21,6 +21,8 @@ from sklearn.ensemble import RandomForestRegressor
 
 from sklearn.pipeline import Pipeline, make_pipeline
 
+from colorama import Fore, Style
+
 
 class ProjectPipeline():
 
@@ -30,23 +32,26 @@ class ProjectPipeline():
         self.params = params
 
         # getting trainer parameters
-        trainer_params = self.params.get('trainer', dict())
-        self.estimator = trainer_params.get('estimator', 'randomforest')
+        self.estimator = self.params.get('estimator', 'linear')
+        self.hyperparams = self.params.get('hyperparams', dict())
+        self.pipeline = self.params.get('pipeline', dict())
 
     def create_estimator(self):
+
+        print(Fore.GREEN + "\nModel hyperparameters:\n"
+              + Style.RESET_ALL
+              + "%s" % self.hyperparams)
 
         estimator = self.estimator
 
         if estimator == 'linear':
-            return LinearRegression()
+            return LinearRegression(self.hyperparams)
         elif estimator == 'lasso':
-            return Lasso()
+            return Lasso(self.hyperparams)
         elif estimator == 'ridge':
-            return Ridge()
+            return Ridge(self.hyperparams)
         elif estimator == 'randomforest':
-            return RandomForestRegressor(n_estimators=100,
-                                         max_depth=10,
-                                         n_jobs=-1)
+            return RandomForestRegressor(**self.hyperparams)
 
     def create_pipeline(self):
 
@@ -60,8 +65,12 @@ class ProjectPipeline():
 
         time_columns = ["pickup_datetime"]
 
+        # getting distance params
+        distance_params = self.pipeline.get('distance', dict())
+        dt_params = {**distance_params, **distance_arguments}
+
         pipe_distance = make_pipeline(
-            DistanceTransformer(**distance_arguments),
+            DistanceTransformer(**dt_params),
             RobustScaler())
 
         pipe_geohash = make_pipeline(

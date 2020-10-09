@@ -29,8 +29,10 @@ class Trainer(MLFlowBase):
         self.params = params
 
         # getting trainer parameters
-        trainer_params = self.params.get('trainer', dict())
-        self.estimator = trainer_params.get('estimator', 'randomforest')
+        self.trainer_params = self.params.get('trainer', dict())
+        self.estimator = self.trainer_params.get('estimator', 'randomforest')
+        self.hyperparams = self.trainer_params.get('hyperparams', dict())
+        self.pipe_params = self.trainer_params.get('pipeline', dict())
 
         # getting data params
         data_params = self.params.get('data', dict())
@@ -72,7 +74,7 @@ class Trainer(MLFlowBase):
         self.__get_training_data()
 
         # create pipeline
-        self.pipeline = ProjectPipeline(self.params).create_pipeline()
+        self.pipeline = ProjectPipeline(self.trainer_params).create_pipeline()
 
         X_tmp = self.X_train
 
@@ -100,7 +102,7 @@ class Trainer(MLFlowBase):
         self.__get_training_data()
 
         # create pipeline
-        self.pipeline = ProjectPipeline(self.params).create_pipeline()
+        self.pipeline = ProjectPipeline(self.trainer_params).create_pipeline()
 
         # create a mlflow run
         self.mlflow_create_run()
@@ -108,6 +110,10 @@ class Trainer(MLFlowBase):
         # push params to mlflow
         self.mlflow_log_param('rows', self.nrows)
         self.mlflow_log_param('model', self.estimator)
+
+        # log dictionary params
+        self.mlflow_log_dict_param(self.hyperparams, "hyper")
+        self.mlflow_log_dict_param(self.pipe_params, "pipe")
 
         # train
         self.pipeline.fit(self.X_train, self.y_train)

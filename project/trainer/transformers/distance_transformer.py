@@ -6,11 +6,13 @@ import pandas as pd
 
 from sklearn.base import BaseEstimator, TransformerMixin
 
+from colorama import Fore, Style
+
 
 class DistanceTransformer(BaseEstimator, TransformerMixin):
 
-    def __init__(self, distance_type="euclidian", **kwargs):
-        self.distance_type = distance_type
+    def __init__(self, type="euclidian", **kwargs):
+        self.type = type
 
     def transform(self, X, y=None):
 
@@ -19,12 +21,15 @@ class DistanceTransformer(BaseEstimator, TransformerMixin):
                                   end_lat="dropoff_latitude",
                                   end_lon="dropoff_longitude")
 
+        print(Fore.GREEN + "\nDistance type: %s" % self.type
+              + Style.RESET_ALL)
+
         assert isinstance(X, pd.DataFrame)
-        if self.distance_type == "haversine":
+        if self.type == "haversine":
             X["distance"] = haversine_vectorized(X, **distance_arguments)
-        if self.distance_type == "euclidian":
+        if self.type == "euclidian":
             X["distance"] = minkowski_distance(X, p=2, **distance_arguments)
-        if self.distance_type == "manhattan":
+        if self.type == "manhattan":
             X["distance"] = minkowski_distance(X, p=1, **distance_arguments)
         return X[["distance"]]
 
