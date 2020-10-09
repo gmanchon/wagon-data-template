@@ -5,5 +5,7 @@ s3fs
 pygeohash
 category_encoders
 sklearn
+memoized_property
+mlflow
 joblib
 colorama

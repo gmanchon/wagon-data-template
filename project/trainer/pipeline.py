@@ -24,12 +24,23 @@ from sklearn.pipeline import Pipeline, make_pipeline
 
 class ProjectPipeline():
 
+    def __init__(self, params):
+        self.params = params
+
     def create_estimator(self):
 
-        return LinearRegression()
-        return Lasso()
-        return Ridge()
-        return RandomForestRegressor()
+        estimator = self.params['estimator']
+
+        if estimator == 'linear':
+            return LinearRegression()
+        elif estimator == 'lasso':
+            return Lasso()
+        elif estimator == 'ridge':
+            return Ridge()
+        elif estimator == 'randomforest':
+            return RandomForestRegressor(n_estimators=100,
+                                         max_depth=10,
+                                         n_jobs=-1)
 
     def create_pipeline(self):
 

@@ -11,7 +11,7 @@ import os
 
 class App:
 
-    def __init__(self):
+    def __init__(self, params):
 
         # data source
         self.data = "s3://wagon-public-datasets/taxi-fare-train.csv"
@@ -24,7 +24,7 @@ class App:
               + Style.RESET_ALL)
 
         # instanciating trainer
-        self.trainer = Trainer()
+        self.trainer = Trainer(params)
 
     def fetch(self, nrows):
 
@@ -83,8 +83,9 @@ class App:
 def main():
 
     n_rows = 10
+    params = dict()
 
-    app = App()
+    app = App(params)
     # app.fetch(n_rows)
     app.head(n_rows)
     app.preprocess(n_rows)

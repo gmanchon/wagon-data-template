@@ -1,4 +1,6 @@
 
+from project.trainer.tracking.mlflow_base import MLFlowBase
+
 from project.data.data import get_data, clean_df
 from project.trainer.pipeline import ProjectPipeline
 from project.trainer.metrics import compute_rmse
@@ -10,11 +12,25 @@ import joblib
 from colorama import Fore, Style
 
 
-class Trainer():
+class Trainer(MLFlowBase):
 
-    def __init__(self):
+    def __init__(self, params):
+
         # self.X_train, self.X_test, self.y_train, self.y_test
-        pass
+
+        # experiment
+        experiment_name = '[FR] [Paris] [gmanchon] wagon data template'
+        mlflow_url = 'https://mlflow.lewagon.co/'
+
+        # calling mother class init
+        super().__init__(experiment_name, mlflow_url)
+
+        # getting training parameters
+        self.params = params
+        self.params['estimator'] = params.get('estimator', 'randomforest')
+        # self.params['distance'] = params.get('distance', 'euclidian')
+
+        print(params)
 
     def __get_training_data(self, nrows):
 
@@ -48,7 +64,7 @@ class Trainer():
         self.__get_training_data(nrows)
 
         # create pipeline
-        self.pipeline = ProjectPipeline().create_pipeline()
+        self.pipeline = ProjectPipeline(self.params).create_pipeline()
 
         X_tmp = self.X_train
 
@@ -76,7 +92,14 @@ class Trainer():
         self.__get_training_data(nrows)
 
         # create pipeline
-        self.pipeline = ProjectPipeline().create_pipeline()
+        self.pipeline = ProjectPipeline(self.params).create_pipeline()
+
+        # create a mlflow run
+        self.mlflow_create_run()
+
+        # push params to mlflow
+        self.mlflow_log_param('model', self.params['estimator'])
+        self.mlflow_log_param('distance', self.params['distance'])
 
         # train
         self.pipeline.fit(self.X_train, self.y_train)
@@ -86,6 +109,9 @@ class Trainer():
 
         # perf
         rmse = compute_rmse(y_pred, self.y_test)
+
+        # push metrics to mlflow
+        self.mlflow_log_metric('rmse', rmse)
 
         # save model
         joblib.dump(self.pipeline, 'model.joblib')
