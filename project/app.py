@@ -1,5 +1,4 @@
 
-
 from project.trainer.trainer import Trainer
 
 import pandas as pd
