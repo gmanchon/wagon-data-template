@@ -35,6 +35,7 @@ code inspiration for data eng week challenge, source projects
 
 - [x] app: use app + model + pipeline nested parameters
 
+- [ ] app: use hydra conf for nested params
 - [ ] app: option for the nested parameters dict using the scikit double underscore syntax
 - [ ] app: add syntax validation for the nested parameters dict (warn for erroneous param syntax)
 
