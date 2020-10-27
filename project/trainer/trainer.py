@@ -1,5 +1,5 @@
 
-from project.trainer.tracking.mlflow_base import MLFlowBase
+from project.trainer.registry.tracking.mlflow_base import MLFlowBase
 
 from project.data.data import get_data, clean_df
 from project.trainer.pipeline import ProjectPipeline
