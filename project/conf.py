@@ -57,22 +57,7 @@ class ConfLoader():
         with open(yaml_path, "r") as file:
             config = yaml.safe_load(file)
 
-        print('\nyaml:')
-        print(f'{config=}')
-        print(f'{config["a"]["b"]["e"]=}')
-
         # convert conf dictionary into ConfStruct object
         conf = ConfStruct(**config)
-
-        print('\nyaml with ConfStruct:')
-        print(f'{conf=}')
-        print(f'{conf.a.b.c=}')
-        print(f'{type(conf.a.b.c)=}')
-        print(f'{conf.a.b.d=}')
-        print(f'{type(conf.a.b.d)=}')
-        print(f'{conf.a.b.e=}')
-        print(f'{type(conf.a.b.e)=}')
-        print(f'{conf.a.b.f=}')
-        print(f'{type(conf.a.b.f)=}')
 
         return conf
