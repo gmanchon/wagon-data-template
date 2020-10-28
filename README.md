@@ -33,6 +33,9 @@ code inspiration for data eng week challenge, source projects
 
 - [x] notebook: load project
 
+- [x] conf: test hydra vs dotenv
+- [x] conf: use yaml + transform conf dictionary into object attributes
+
 - [x] app: use app + model + pipeline nested parameters
 
 - [ ] app: use hydra conf for nested params

@@ -24,3 +24,9 @@ install_requirements:
 
 install_project:
 	pip install -e .
+
+# - - - - - - - - - - - - - - - - - - - - - - - -
+# Project
+
+run:
+	python -m project.app

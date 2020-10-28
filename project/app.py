@@ -1,5 +1,8 @@
 
+from project.conf import ConfLoader
 from project.trainer.trainer import Trainer
+
+from os.path import join, dirname
 
 import pandas as pd
 
@@ -7,13 +10,16 @@ from colorama import Fore, Style
 
 import os
 
-
 class App:
 
     def __init__(self, params):
 
         # getting params
         self.params = params
+
+        # load conf
+        yaml_path = join(dirname(__file__), '..', 'config.yaml')
+        self.conf = ConfLoader(yaml_path)
 
         # getting data params
         data_params = self.params.get('data', dict())

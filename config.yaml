@@ -1,0 +1,6 @@
+a:
+  b:
+    c: True
+    d: [1, 2, 3]
+    e: 'some string'
+    f: 5
