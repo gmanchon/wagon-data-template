@@ -36,7 +36,8 @@ code inspiration for data eng week challenge, source projects
 - [x] conf: test hydra vs dotenv
 - [x] conf: use yaml + transform conf dictionary into object attributes
 
-- [ ] conf: gitignore conf.yaml and use config.yaml as sample
+- [x] conf: gitignore conf.yaml and use config.yaml as sample
+- [x] conf: add representation for conf objects
 - [ ] conf: use conf for prod parameters
 - [ ] conf: propagate configuration in conf consuming objects
 
