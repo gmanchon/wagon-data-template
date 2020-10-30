@@ -22,6 +22,10 @@ class App:
         yaml_path = join(dirname(__file__), '..', 'config.yaml')
         self.conf = ConfLoader(yaml_path)
 
+        print(Fore.GREEN + "\nLoaded configuration:"
+              + Style.RESET_ALL
+              + str(self.conf))
+
         # getting data params
         data_params = self.params.get('data', dict())
         self.nrows = data_params.get('nrows', 1_000)
@@ -33,7 +37,7 @@ class App:
         project_path = os.path.dirname(os.path.dirname(__file__))
         self.data_path = os.path.join(project_path, "data", "data.csv")
 
-        print(Fore.GREEN + "Loading trainer..."
+        print(Fore.GREEN + "\nLoading trainer..."
               + Style.RESET_ALL)
 
         # instanciating trainer
