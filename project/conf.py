@@ -45,7 +45,6 @@ class ConfLoader():
         self.yaml_path = yaml_path
         self.conf = self.__load_yaml_conf(yaml_path)
 
-
     def __load_yaml_conf(self, yaml_path):
 
         # yaml allows to benefit from an organised structure (a dictionary)
