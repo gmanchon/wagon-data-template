@@ -19,8 +19,10 @@ class App:
         self.params = params
 
         # load conf
-        yaml_path = join(dirname(__file__), '..', 'config.yaml')
-        self.conf = ConfLoader(yaml_path)
+        project_path = dirname(dirname(__file__))
+        project_conf_path = join(project_path, 'config.yaml')
+        defaults_conf_path = join(project_path, 'config.defaults.yaml')
+        self.conf = ConfLoader(project_conf_path, defaults_conf_path)
 
         print(Fore.GREEN + "\nLoaded configuration:"
               + Style.RESET_ALL

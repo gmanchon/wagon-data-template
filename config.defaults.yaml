@@ -1,0 +1,11 @@
+registry:
+  code:
+    type: gcp
+    bucket_name: name-of-the-bucket
+  model:
+    type: git
+    label_prefix: kmp
+  tracking:
+    type: mlflow
+    server: https://url.of.the.mlflow.server/
+    experiment_name: '[CC] [City] [username] project name'

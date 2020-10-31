@@ -3,6 +3,7 @@
 from collections.abc import Mapping
 
 import yaml
+import copy
 
 
 # https://stackoverflow.com/questions/1305532/convert-nested-python-dict-to-object
@@ -68,22 +69,29 @@ class ConfStruct:
 
 class ConfLoader():
     """
-    loads yaml configuration file and returns an object
-    allowing the objects consuming the configuration
+    loads project and defaults yaml configuration files
+    and provides a validated configuration object
+    allows the objects consuming the configuration
     to easilly access the conf parameters in nested objects attributes
     """
 
-    def __init__(self, yaml_path):
+    def __init__(self, project_conf_path, defaults_conf_path):
+        """
+        loads configuration from project and defaults yaml files
+        processes validated conf
+        """
 
-        self.yaml_path = yaml_path
-        self.conf = self.__load_yaml_conf(yaml_path)
+        self.project_conf = self.__load_yaml_conf(project_conf_path)
+        self.defaults_conf = self.__load_yaml_conf(defaults_conf_path)
+        self.conf = copy.deepcopy(self.defaults_conf)
+        self.__validate_conf(self.project_conf, self.conf)
 
     def __repr__(self):
 
         # showing representation of loaded configuration
         return repr(self.conf)
 
-    def __load_yaml_conf(self, yaml_path):
+    def __load_yaml_conf(self, file_path):
 
         # yaml allows to benefit from an organised structure (a dictionary)
         # allowing to pass the conf to the consuming objects
@@ -91,10 +99,48 @@ class ConfLoader():
         # to access easilly conf elements using the dot notation
 
         # load conf file
-        with open(yaml_path, "r") as file:
+        with open(file_path, "r") as file:
             config = yaml.safe_load(file)
 
         # convert conf dictionary into ConfStruct object
         conf = ConfStruct(**config)
 
         return conf
+
+    def __validate_conf(self, project_conf, defaults_conf):
+        """
+        processes conf object by iterating through defaults conf object
+        and replacing values by project conf values when available
+        """
+
+        # iterate through defaults conf object
+        for key, value in defaults_conf.__dict__.items():
+
+            # checking whether key contains conf struct
+            if isinstance(value, ConfStruct):
+
+                # retrieve corresponding project conf
+                if hasattr(project_conf, key):
+
+                    # iterate recursively through conf struct representation
+                    self.__validate_conf(getattr(project_conf, key), value)
+
+            else:
+
+                # validate other datatypes against project conf
+                if hasattr(project_conf, key):
+
+                    # validate project conf data type
+                    if type(getattr(project_conf, key)) == type(value):
+
+                        # replace defaults value with project value
+                        setattr(defaults_conf, key, getattr(project_conf, key))
+
+        # handle additional confs from project
+        for key, value in project_conf.__dict__.items():
+
+            # checking whether key exists in defaults
+            if not hasattr(defaults_conf, key):
+
+                # setting missing key
+                setattr(defaults_conf, key, getattr(project_conf, key))
