@@ -43,6 +43,7 @@ code inspiration for data eng week challenge, source projects
 - [ ] conf: use conf for prod parameters
 - [ ] conf: propagate configuration in conf consuming objects
 - [ ] conf: handle missing defaults
+- [ ] conf: handle invalid yaml file
 
 - [x] app: use app + model + pipeline nested parameters
 
