@@ -39,8 +39,10 @@ code inspiration for data eng week challenge, source projects
 - [x] conf: gitignore conf.yaml and use config.yaml as sample
 - [x] conf: add representation for conf objects
 - [x] conf: handle default params for conf
+- [x] conf: show diff between defaults and conf params in logs
 - [ ] conf: use conf for prod parameters
 - [ ] conf: propagate configuration in conf consuming objects
+- [ ] conf: handle missing defaults
 
 - [x] app: use app + model + pipeline nested parameters
 

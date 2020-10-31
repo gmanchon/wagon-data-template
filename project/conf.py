@@ -2,6 +2,8 @@
 
 from collections.abc import Mapping
 
+from colorama import Fore, Style
+
 import yaml
 import copy
 
@@ -88,8 +90,31 @@ class ConfLoader():
 
     def __repr__(self):
 
-        # showing representation of loaded configuration
-        return repr(self.conf)
+        # getting representation of project, defaults and validated conf
+        project_repr = repr(self.project_conf).split('\n')
+        defaults_repr = repr(self.defaults_conf).split('\n')
+        conf_repr = repr(self.conf).split('\n')
+
+        # showing representation of validated configuration
+        representation = []
+
+        for conf_line in conf_repr:
+
+            # checking if line is shared
+            line_in_project = conf_line in project_repr
+            line_in_defaults = conf_line in defaults_repr
+
+            # appending representation
+            if line_in_defaults:
+                if line_in_project:
+                    representation.append(conf_line)
+                else:
+                    representation.append(Fore.MAGENTA + conf_line
+                                          + Style.RESET_ALL)
+            else:
+                representation.append(Fore.CYAN + conf_line + Style.RESET_ALL)
+
+        return "\n".join(representation)
 
     def __load_yaml_conf(self, file_path):
 
