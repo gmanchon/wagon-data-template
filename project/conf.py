@@ -89,6 +89,11 @@ class ConfLoader():
         self.__validate_conf(self.project_conf, self.conf)
 
     def __repr__(self):
+        """
+        returns a diff of repr between conf from project and defaults
+        conf present only in defaults is highlighted in magenta
+        conf present only in project is highlighted in cyan
+        """
 
         # getting representation of project, defaults and validated conf
         project_repr = repr(self.project_conf).split('\n')
@@ -160,6 +165,15 @@ class ConfLoader():
 
                         # replace defaults value with project value
                         setattr(defaults_conf, key, getattr(project_conf, key))
+
+                    else:
+
+                        # generate warning
+                        print(Fore.RED
+                              + "⚠️  invalid data type inside project conf "
+                              + f"file for key '{key}' value '{value}', "
+                              + "conf line is ignored"
+                              + Style.RESET_ALL)
 
         # handle additional confs from project
         for key, value in project_conf.__dict__.items():
