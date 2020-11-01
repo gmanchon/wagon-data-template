@@ -1,0 +1,13 @@
+registry:
+  code:
+    bucket_name: my-bucket-name
+  model:
+    type: git
+    label_prefix: kmp
+    foo:
+      bar:
+        toto: True
+  tracking:
+    type: 123
+    server: https://my.mlflow.server.url/
+    experiment_name: '[FR] [Paris] [username] my project name'

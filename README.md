@@ -30,6 +30,8 @@ code inspiration for data eng week challenge, source projects
 
 - [x] makefile: env
 - [x] makefile: packages
+- [x] makefile: add pytest and pylint
+- [ ] makefile: clean pylint
 
 - [x] notebook: load project
 
@@ -40,6 +42,7 @@ code inspiration for data eng week challenge, source projects
 - [x] conf: add representation for conf objects
 - [x] conf: handle default params for conf
 - [x] conf: show diff between defaults and conf params in logs
+- [x] conf: add tests
 - [ ] conf: use conf for prod parameters
 - [ ] conf: propagate configuration in conf consuming objects
 - [ ] conf: handle missing defaults
