@@ -1,4 +1,5 @@
 registry:
+  experiment_name: '[FR] [Paris] [username] my project name'
   code:
     bucket_name: my-bucket-name
   model:
@@ -10,4 +11,3 @@ registry:
   tracking:
     type: 123
     server: https://my.mlflow.server.url/
-    experiment_name: '[FR] [Paris] [username] my project name'

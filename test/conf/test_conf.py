@@ -37,6 +37,7 @@ class TestConf(unittest.TestCase):
 
         print(self.conf)
 
+        self.assertEqual(self.conf.registry.experiment_name, "[FR] [Paris] [username] my project name")
         self.assertEqual(self.conf.registry.code.type, "gcp")
         self.assertEqual(self.conf.registry.code.bucket_name, "my-bucket-name")
         self.assertEqual(self.conf.registry.model.type, "git")
@@ -44,11 +45,10 @@ class TestConf(unittest.TestCase):
         self.assertEqual(self.conf.registry.model.foo.bar.toto, True)
         self.assertEqual(self.conf.registry.tracking.type, "mlflow")
         self.assertEqual(self.conf.registry.tracking.server, "https://my.mlflow.server.url/")
-        self.assertEqual(self.conf.registry.tracking.experiment_name, "[FR] [Paris] [username] my project name")
-
-        print(self.conf_loader)
 
     def test_conf_diff(self):
+
+        print(self.conf_loader)
 
         # checking line in defaults conf only gets flagged as magenta
         conf_repr = repr(self.conf_loader).split("\n")
