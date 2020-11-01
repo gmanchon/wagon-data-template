@@ -53,18 +53,24 @@ class TestConf(unittest.TestCase):
         # checking line in defaults conf only gets flagged as magenta
         conf_repr = repr(self.conf_loader).split("\n")
 
-        defaults_line = Fore.MAGENTA \
-            + "registry.model.type = 'gcp'" \
-            + Style.RESET_ALL
+        defaults_line = "registry.model.type = 'gcp'"
 
         # checking line in project conf only gets flagged as cyan
         project_line = Fore.CYAN \
             + "registry.model.bucket_name = 'my-bucket-name'" \
             + Style.RESET_ALL
 
+        # checking line in project conf redefining conf in defaults gets flagged as blue
+        redefine_line = Fore.MAGENTA \
+            + "registry.code.foo.bar.toto = True" \
+            + Style.RESET_ALL
+
         # checking line identical in defaults and conf does not get flagged
-        common_line = "registry.code.type = 'git'"
+        common_line = Fore.BLUE \
+            + "registry.code.type = 'git'" \
+            + Style.RESET_ALL
 
         self.assertTrue(defaults_line in conf_repr)
         self.assertTrue(project_line in conf_repr)
+        self.assertTrue(redefine_line in conf_repr)
         self.assertTrue(common_line in conf_repr)

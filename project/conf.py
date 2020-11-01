@@ -6,6 +6,7 @@ from colorama import Fore, Style
 
 import yaml
 import copy
+import re
 
 
 # https://stackoverflow.com/questions/1305532/convert-nested-python-dict-to-object
@@ -68,6 +69,29 @@ class ConfStruct:
 
         return representation
 
+    def has_conf(self, conf):
+        """
+        checks whether object contains chain of attributes
+        described by conf parameter such as `a.b.c`
+        """
+
+        # get list of attributes in chain
+        attributes = conf.split('.')
+
+        # iterate through objects
+        current_object = self
+
+        for attribute in attributes:
+
+            # check if current object has attribute
+            if not hasattr(current_object, attribute):
+                return False
+
+            # update current object
+            current_object = getattr(current_object, attribute)
+
+        return True
+
 
 class ConfLoader():
     """
@@ -111,13 +135,33 @@ class ConfLoader():
 
             # appending representation
             if line_in_defaults:
+
+                # check if line is in project
                 if line_in_project:
-                    representation.append(conf_line)
+
+                    # line present both in project and defaults
+                    representation.append(Fore.BLUE + conf_line
+                                          + Style.RESET_ALL)
                 else:
+
+                    # line present only in defaults
+                    representation.append(conf_line)
+            else:
+
+                # get conf from line
+                conf = re.search(r"^[a-zA-Z][\w\.]*", conf_line).group(0)
+
+                # check if line conf is in defaults
+                if self.defaults_conf.has_conf(conf):
+
+                    # line present in defaults and customized in project
+                    representation.append(Fore.CYAN + conf_line
+                                          + Style.RESET_ALL)
+                else:
+
+                    # line present only in project
                     representation.append(Fore.MAGENTA + conf_line
                                           + Style.RESET_ALL)
-            else:
-                representation.append(Fore.CYAN + conf_line + Style.RESET_ALL)
 
         return "\n".join(representation)
 

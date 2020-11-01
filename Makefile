@@ -34,7 +34,8 @@ pylint:
 	find . -iname "*.py" -not -path "./tests/*" | xargs pylint --output-format=colorized; true
 
 pytest:
-	PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
+	# $(file) allows to `make pytest file=test/conf`
+	PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes $(file)
 
 run:
 	python -m project.app

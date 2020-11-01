@@ -31,6 +31,7 @@ code inspiration for data eng week challenge, source projects
 - [x] makefile: env
 - [x] makefile: packages
 - [x] makefile: add pytest and pylint
+- [x] makefile: add test per directory
 - [ ] makefile: clean pylint
 
 - [x] notebook: load project
@@ -43,6 +44,7 @@ code inspiration for data eng week challenge, source projects
 - [x] conf: handle default params for conf
 - [x] conf: show diff between defaults and conf params in logs
 - [x] conf: add tests
+- [x] conf: highlight conf present in projects and absent from defaults
 - [ ] conf: use conf for prod parameters
 - [ ] conf: propagate configuration in conf consuming objects
 - [ ] conf: handle missing defaults
@@ -56,6 +58,7 @@ code inspiration for data eng week challenge, source projects
 
 - [x] trainer: log training steps in cli
 
+- [ ] registry: add tdd tests
 - [x] registry tracking repo: auto parse nested parameters
 - [x] registry tracking repo: upload tracking to mlflow
 - [ ] registry model repo: upload trained model on gcs
