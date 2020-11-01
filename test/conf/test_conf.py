@@ -38,11 +38,11 @@ class TestConf(unittest.TestCase):
         print(self.conf)
 
         self.assertEqual(self.conf.registry.experiment_name, "[FR] [Paris] [username] my project name")
-        self.assertEqual(self.conf.registry.code.type, "gcp")
-        self.assertEqual(self.conf.registry.code.bucket_name, "my-bucket-name")
-        self.assertEqual(self.conf.registry.model.type, "git")
-        self.assertEqual(self.conf.registry.model.label_prefix, "kmp")
-        self.assertEqual(self.conf.registry.model.foo.bar.toto, True)
+        self.assertEqual(self.conf.registry.model.type, "gcp")
+        self.assertEqual(self.conf.registry.model.bucket_name, "my-bucket-name")
+        self.assertEqual(self.conf.registry.code.type, "git")
+        self.assertEqual(self.conf.registry.code.label_prefix, "kmp")
+        self.assertEqual(self.conf.registry.code.foo.bar.toto, True)
         self.assertEqual(self.conf.registry.tracking.type, "mlflow")
         self.assertEqual(self.conf.registry.tracking.server, "https://my.mlflow.server.url/")
 
@@ -54,16 +54,16 @@ class TestConf(unittest.TestCase):
         conf_repr = repr(self.conf_loader).split("\n")
 
         defaults_line = Fore.MAGENTA \
-            + "registry.code.type = 'gcp'" \
+            + "registry.model.type = 'gcp'" \
             + Style.RESET_ALL
 
         # checking line in project conf only gets flagged as cyan
         project_line = Fore.CYAN \
-            + "registry.code.bucket_name = 'my-bucket-name'" \
+            + "registry.model.bucket_name = 'my-bucket-name'" \
             + Style.RESET_ALL
 
         # checking line identical in defaults and conf does not get flagged
-        common_line = "registry.model.type = 'git'"
+        common_line = "registry.code.type = 'git'"
 
         self.assertTrue(defaults_line in conf_repr)
         self.assertTrue(project_line in conf_repr)

@@ -1,8 +1,8 @@
 registry:
   experiment_name: '[FR] [Paris] [username] my project name'
-  code:
-    bucket_name: my-bucket-name
   model:
+    bucket_name: my-bucket-name
+  code:
     type: git
     label_prefix: kmp
     foo:

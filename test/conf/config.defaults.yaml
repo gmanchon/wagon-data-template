@@ -1,9 +1,9 @@
 registry:
   experiment_name: '[CC] [City] [username] project name'
-  code:
+  model:
     type: gcp
     bucket_name: name-of-the-bucket
-  model:
+  code:
     type: git
     label_prefix: kmp
   tracking:
