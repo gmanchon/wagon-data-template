@@ -22,8 +22,8 @@ class TestConf(unittest.TestCase):
 
         # load conf from test folder defaults and project file
         project_path = dirname(__file__)
-        project_conf_path = join(project_path, 'config.yaml')
-        defaults_conf_path = join(project_path, 'config.defaults.yaml')
+        project_conf_path = join(project_path, "config.yaml")
+        defaults_conf_path = join(project_path, "config.defaults.yaml")
         self.conf_loader = ConfLoader(project_conf_path, defaults_conf_path)
         self.conf = self.conf_loader.conf
 
@@ -37,14 +37,14 @@ class TestConf(unittest.TestCase):
 
         print(self.conf)
 
-        self.assertEqual(self.conf.registry.code.type, 'gcp')
-        self.assertEqual(self.conf.registry.code.bucket_name, 'my-bucket-name')
-        self.assertEqual(self.conf.registry.model.type, 'git')
-        self.assertEqual(self.conf.registry.model.label_prefix, 'kmp')
+        self.assertEqual(self.conf.registry.code.type, "gcp")
+        self.assertEqual(self.conf.registry.code.bucket_name, "my-bucket-name")
+        self.assertEqual(self.conf.registry.model.type, "git")
+        self.assertEqual(self.conf.registry.model.label_prefix, "kmp")
         self.assertEqual(self.conf.registry.model.foo.bar.toto, True)
-        self.assertEqual(self.conf.registry.tracking.type, 'mlflow')
-        self.assertEqual(self.conf.registry.tracking.server, 'https://my.mlflow.server.url/')
-        self.assertEqual(self.conf.registry.tracking.experiment_name, '[FR] [Paris] [username] my project name')
+        self.assertEqual(self.conf.registry.tracking.type, "mlflow")
+        self.assertEqual(self.conf.registry.tracking.server, "https://my.mlflow.server.url/")
+        self.assertEqual(self.conf.registry.tracking.experiment_name, "[FR] [Paris] [username] my project name")
 
         print(self.conf_loader)
 
