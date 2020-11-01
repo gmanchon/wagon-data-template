@@ -25,11 +25,12 @@ class App:
         project_path = dirname(dirname(__file__))
         project_conf_path = join(project_path, 'config.yaml')
         defaults_conf_path = join(project_path, 'config.defaults.yaml')
-        self.conf = ConfLoader(project_conf_path, defaults_conf_path)
+        self.conf_loader = ConfLoader(project_conf_path, defaults_conf_path)
+        self.conf = self.conf_loader.conf
 
         print(Fore.GREEN + "\nLoaded configuration:"
               + Style.RESET_ALL
-              + str(self.conf))
+              + str(self.conf_loader))
 
         # getting data params
         data_params = self.params.get('data', dict())
