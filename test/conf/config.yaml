@@ -1,7 +1,7 @@
 registry:
   experiment_name: '[FR] [Paris] [username] my project name'
   model:
-    bucket_name: my-bucket-name
+    bucket_name: wdt-test-validation-bucket
   code:
     type: git
     label_prefix: kmp

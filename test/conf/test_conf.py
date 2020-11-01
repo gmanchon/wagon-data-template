@@ -16,7 +16,8 @@ class TestConf(unittest.TestCase):
         super().__init__(*args, **kwargs)
 
         # generate stubs
-        self.__gen_stubs()
+        self.conf_loader = self.__gen_stubs()
+        self.conf = self.conf_loader.conf
 
     def __gen_stubs(self):
 
@@ -24,8 +25,9 @@ class TestConf(unittest.TestCase):
         project_path = dirname(__file__)
         project_conf_path = join(project_path, "config.yaml")
         defaults_conf_path = join(project_path, "config.defaults.yaml")
-        self.conf_loader = ConfLoader(project_conf_path, defaults_conf_path)
-        self.conf = self.conf_loader.conf
+        conf_loader = ConfLoader(project_conf_path, defaults_conf_path)
+
+        return conf_loader
 
     def test_conf_structure(self):
 
@@ -39,7 +41,7 @@ class TestConf(unittest.TestCase):
 
         self.assertEqual(self.conf.registry.experiment_name, "[FR] [Paris] [username] my project name")
         self.assertEqual(self.conf.registry.model.type, "gcp")
-        self.assertEqual(self.conf.registry.model.bucket_name, "my-bucket-name")
+        self.assertEqual(self.conf.registry.model.bucket_name, "wdt-test-validation-bucket")
         self.assertEqual(self.conf.registry.code.type, "git")
         self.assertEqual(self.conf.registry.code.label_prefix, "kmp")
         self.assertEqual(self.conf.registry.code.foo.bar.toto, True)
@@ -57,7 +59,7 @@ class TestConf(unittest.TestCase):
 
         # checking line in project conf only gets flagged as cyan
         project_line = Fore.CYAN \
-            + "registry.model.bucket_name = 'my-bucket-name'" \
+            + "registry.model.bucket_name = 'wdt-test-validation-bucket'" \
             + Style.RESET_ALL
 
         # checking line in project conf redefining conf in defaults gets flagged as blue
