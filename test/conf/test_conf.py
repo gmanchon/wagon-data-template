@@ -39,35 +39,38 @@ class TestConf(unittest.TestCase):
 
         print(self.conf)
 
-        self.assertEqual(self.conf.registry.experiment_name, "[FR] [Paris] [username] my project name")
+        self.assertEqual(self.conf.registry.experiment_name,
+                         "[FR] [Paris] [username] my project name")
         self.assertEqual(self.conf.registry.model.type, "gcp")
-        self.assertEqual(self.conf.registry.model.bucket_name, "wdt-test-validation-bucket")
+        self.assertEqual(self.conf.registry.model.bucket_name,
+                         "wdt-test-validation-bucket")
         self.assertEqual(self.conf.registry.code.type, "git")
         self.assertEqual(self.conf.registry.code.label_prefix, "kmp")
         self.assertEqual(self.conf.registry.code.foo.bar.toto, True)
         self.assertEqual(self.conf.registry.tracking.type, "mlflow")
-        self.assertEqual(self.conf.registry.tracking.server, "https://my.mlflow.server.url/")
+        self.assertEqual(self.conf.registry.tracking.server,
+                         "https://my.mlflow.server.url/")
 
     def test_conf_diff(self):
 
         print(self.conf_loader)
 
-        # checking line in defaults conf only gets flagged as magenta
+        # check line in defaults conf only is not flagged
         conf_repr = repr(self.conf_loader).split("\n")
 
         defaults_line = "registry.model.type = 'gcp'"
 
-        # checking line in project conf only gets flagged as cyan
+        # check line in project conf only is flagged as cyan
         project_line = Fore.CYAN \
             + "registry.model.bucket_name = 'wdt-test-validation-bucket'" \
             + Style.RESET_ALL
 
-        # checking line in project conf redefining conf in defaults gets flagged as blue
+        # check line in project setting conf in defaults is flagged as magenta
         redefine_line = Fore.MAGENTA \
             + "registry.code.foo.bar.toto = True" \
             + Style.RESET_ALL
 
-        # checking line identical in defaults and conf does not get flagged
+        # check line identical in defaults and conf is flagged as blue
         common_line = Fore.BLUE \
             + "registry.code.type = 'git'" \
             + Style.RESET_ALL
