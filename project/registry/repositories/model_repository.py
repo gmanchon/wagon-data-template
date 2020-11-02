@@ -16,6 +16,9 @@ class ModelRepository():
         self.local_path = conf.local_path
         self.model_filename = conf.model_filename
 
+        # client
+        self.storage_client = storage.Client()
+
     def store_model(self, experiment, run):
 
         # get storage path
@@ -28,16 +31,14 @@ class ModelRepository():
         storage_model_path = join(storage_path, self.model_filename)
 
         # store model on bucket
-        storage_client = storage.Client()
-        bucket = storage_client.bucket(self.bucket_name)
+        bucket = self.storage_client.bucket(self.bucket_name)
         blob = bucket.blob(storage_model_path)
         blob.upload_from_filename(local_model_path)
 
     def list_models(self):
 
         # list blobs from bucket
-        storage_client = storage.Client()
-        blobs = storage_client.list_blobs(self.bucket_name)
+        blobs = self.storage_client.list_blobs(self.bucket_name)
 
         paths = "".join([blob.name for blob in blobs])
 
@@ -58,8 +59,7 @@ class ModelRepository():
         storage_model_path = join(storage_path, self.model_filename)
 
         # get model from bucket
-        storage_client = storage.Client()
-        bucket = storage_client.bucket(self.bucket_name)
+        bucket = self.storage_client.bucket(self.bucket_name)
         blob = bucket.blob(storage_model_path)
         blob.download_to_filename(local_model_path)
 
