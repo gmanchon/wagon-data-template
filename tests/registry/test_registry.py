@@ -1,5 +1,5 @@
 
-from test.conf.test_conf import TestConf
+from tests.conf.test_conf import TestConf
 
 from project.registry.registry import Registry
 
