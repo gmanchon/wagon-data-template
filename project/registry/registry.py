@@ -1,6 +1,7 @@
 
 from project.registry.repositories.run_repository import RunRepository
 from project.registry.repositories.model_repository import ModelRepository
+from project.registry.repositories.code_repository import CodeRepository
 
 
 class Registry():
@@ -14,6 +15,7 @@ class Registry():
         # create repositories
         self.run_repository = RunRepository()
         self.model_repository = ModelRepository(conf.model)
+        self.code_repository = CodeRepository(conf.code)
 
     # def experiments(self):
     #     pass

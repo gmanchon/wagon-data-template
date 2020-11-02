@@ -67,9 +67,13 @@ code inspiration for data eng week challenge, source projects
 - [x] registry model repo: download trained model from gcs
 - [x] registry model repo: list trained models from gcs
 - [x] registry model repo: add tests
+- [ ] registry code repo: sqlite because several runs can occur for the same commit
 - [ ] registry code repo: auto commit if required and label trained code
 
 - [ ] registry: do not store all runs ? / Bruno
+
+- [ ] trainer: use yaml files in source control for params and hyperparams ?
+- [ ] trainer: require clean git status to launch a training (option to ignore ?)
 
 - [x] train locally
 - [ ] train on colab
