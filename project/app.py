@@ -1,5 +1,6 @@
 
 from project.conf import ConfLoader
+from project.registry.registry import Registry
 from project.trainer.trainer import Trainer
 
 from os.path import join, dirname
@@ -9,6 +10,9 @@ import pandas as pd
 from colorama import Fore, Style
 
 import os
+
+
+REGISTRY_ENABLED = False
 
 
 class App:
@@ -32,6 +36,9 @@ class App:
               + Style.RESET_ALL
               + str(self.conf_loader))
 
+        # load registry
+        self.registry = Registry(self.conf.registry, REGISTRY_ENABLED)
+
         # getting data params
         data_params = self.params.get('data', dict())
         self.nrows = data_params.get('nrows', 1_000)
@@ -48,6 +55,30 @@ class App:
 
         # instanciating trainer
         self.trainer = Trainer(params)
+
+    def check_registry(self, registry_enabled):
+
+        # check if registry is enabled
+        if not registry_enabled:
+            return True
+
+        print(Fore.GREEN + "\nValidating git status..."
+              + Style.RESET_ALL)
+
+        # get git status
+        is_clean = self.registry.is_git_status_clean()
+
+        if not is_clean:
+            print(Fore.RED
+                  + "⚠️  Cannot train the model and register the performance"
+                  + " unless the git status is clean. "
+                  + "The code needs to be committed in order to be deployable "
+                  + " in the future. "
+                  + "Please clean the git status of the repository"
+                  + " (commit or stash the code)"
+                  + Style.RESET_ALL)
+
+        return is_clean
 
     def fetch(self):
 
@@ -109,7 +140,7 @@ def main():
         data=dict(
             nrows=10),
         trainer=dict(
-            estimator='randomforest',
+            estimator='linear',
             hyperparams=dict(
                 n_estimators=100,
                 max_depth=10,
@@ -121,10 +152,13 @@ def main():
                     zone="America/New_York"))))
 
     app = App(params)
-    # app.fetch()
-    app.head()
-    app.preprocess()
-    app.train()
+
+    if app.check_registry(REGISTRY_ENABLED):
+
+        # app.fetch()
+        app.head()
+        app.preprocess()
+        app.train()
 
 
 if __name__ == '__main__':
