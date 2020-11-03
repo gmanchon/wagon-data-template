@@ -24,7 +24,7 @@ class TestRegistry(unittest.TestCase):
 
         # create registry
         print(self.conf.registry)
-        registry = Registry(self.conf.registry)
+        registry = Registry(self.conf.registry, True)
 
         return registry
 
@@ -37,21 +37,21 @@ class TestRegistry(unittest.TestCase):
 
         self.assertEqual(experiment, "[FR] [Paris] [username] my project name")
 
-    def test_get_current_run(self):
+    # def test_get_current_run(self):
 
-        run = self.reg.get_current_run()
+    #     run = self.reg.get_current_run()
 
-        self.assertIsInstance(run, str)
+    #     self.assertIsInstance(run, str)
 
-    def test_new_run(self):
+    # def test_new_run(self):
 
-        run = self.reg.get_current_run()
+    #     run = self.reg.get_current_run()
 
-        self.reg.new_run()
+    #     self.reg.new_run()
 
-        new_run = self.reg.get_current_run()
+    #     new_run = self.reg.get_current_run()
 
-        self.assertNotEqual(run, new_run)
+    #     self.assertNotEqual(run, new_run)
 
     # def test_log_params(self):
 

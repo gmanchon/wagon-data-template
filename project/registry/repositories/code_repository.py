@@ -40,4 +40,4 @@ class CodeRepository():
 
         commit_hash = os.popen(git_latest_commit_hash_cmd).read()
 
-        return commit_hash
+        return commit_hash.strip()
