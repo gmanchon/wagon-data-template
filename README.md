@@ -67,15 +67,19 @@ code inspiration for data eng week challenge, source projects
 - [x] trainer: log training steps in cli
 
 - [ ] registry: add tdd tests
+
 - [x] registry run repo: add create new runs
 - [x] registry run repo: add tests
+
+- [x] registry code repo: check git status
+- [ ] registry code repo: sqlite because several runs can occur for the same commit
+- [ ] registry code repo: auto commit if required and label trained code
+
 - [x] registry model repo: upload trained model to gcs
 - [x] registry model repo: download trained model from gcs
 - [x] registry model repo: list trained models from gcs
 - [x] registry model repo: add tests
-- [x] registry code repo: check git status
-- [ ] registry code repo: sqlite because several runs can occur for the same commit
-- [ ] registry code repo: auto commit if required and label trained code
+
 - [x] registry tracking repo: auto parse nested parameters
 - [x] registry tracking repo: upload tracking to mlflow
 - [x] registry tracking repo: store code repo and model repo locations in run
