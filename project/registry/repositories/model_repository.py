@@ -44,7 +44,7 @@ class ModelRepository():
             + f"/experiments/{experiment}" \
             + f"/runs/{run}"
 
-        print(Fore.GREEN + "\nModel stored at:"
+        print(Fore.GREEN + "\nModel stored at:\n"
               + Style.RESET_ALL
               + store_location)
 

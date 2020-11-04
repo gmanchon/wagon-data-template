@@ -42,6 +42,12 @@ class TrackingRepository():
         self.mlflow_run = self.mlflow_client.create_run(
             self.mlflow_experiment_id)
 
+        print(Fore.GREEN + "\nTracking created at:\n"
+              + Style.RESET_ALL
+              + f"{self.mlflow_uri}/#"
+              + f"/experiments/{self.mlflow_experiment_id}"
+              + f"/runs/{self.mlflow_run}")
+
     def mlflow_log_param(self, key, value):
 
         # create run
