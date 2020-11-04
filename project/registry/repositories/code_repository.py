@@ -1,4 +1,6 @@
 
+from colorama import Fore, Style
+
 import os
 
 
@@ -11,7 +13,13 @@ class CodeRepository():
 
     def get_commit_hash(self):
 
-        return self.__get_latest_commit_hash()
+        run_hash = self.__get_latest_commit_hash()
+
+        print(Fore.GREEN + "\nCode run: "
+              + Style.RESET_ALL
+              + run_hash)
+
+        return run_hash
 
     def list_commit_hashes(self):
 

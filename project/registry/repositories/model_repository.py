@@ -3,6 +3,8 @@ from google.cloud import storage
 
 from os.path import join
 
+from colorama import Fore, Style
+
 import re
 
 
@@ -34,6 +36,16 @@ class ModelRepository():
         bucket = self.storage_client.bucket(self.bucket_name)
         blob = bucket.blob(storage_model_path)
         blob.upload_from_filename(local_model_path)
+
+        # build storage location link
+        store_location = "https://console.cloud.google.com/storage" \
+            + f"/browser/{self.bucket_name}" \
+            + "/registry" \
+            + f"/experiments/{experiment}" \
+            + f"/runs/{run}"
+
+        print(Fore.GREEN + f"\nmodel stored at {store_location}..."
+              + Style.RESET_ALL)
 
     def list_models(self):
 
