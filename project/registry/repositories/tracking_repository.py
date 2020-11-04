@@ -33,7 +33,7 @@ class TrackingRepository():
 
     def mlflow_create_run(self):
 
-        if self.mlflow_run is not None:
+        if hasattr(self, 'mlflow_run'):
             return
 
         print(Fore.GREEN + "\nCreating tracking run..."
