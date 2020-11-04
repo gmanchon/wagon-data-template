@@ -66,6 +66,12 @@ class TrackingRepository():
         self.mlflow_client.set_tag(
             self.mlflow_run.info.run_id, key, value)
 
+    def mlflow_set_tags(self, items):
+
+        # set tags
+        self.mlflow_client.set_tags(
+            self.mlflow_run.info.run_id, items)
+
     def mlflow_log_param(self, key, value):
 
         # create run
