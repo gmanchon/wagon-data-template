@@ -11,9 +11,10 @@ from colorama import Fore, Style
 
 class TrackingRepository():
 
-    def __init__(self, conf, experiment_name,
+    def __init__(self, conf, experiment_name, code_commit_hash,
                  code_storage_location, model_storage_location):
 
+        self.code_commit_hash = code_commit_hash
         self.experiment_name = experiment_name
         self.code_storage_location = code_storage_location
         self.model_storage_location = model_storage_location
@@ -55,6 +56,7 @@ class TrackingRepository():
 
         # set run tags
         self.mlflow_set_tag("code storage", self.code_storage_location)
+        self.mlflow_set_tag("code commit hash", self.code_commit_hash)
         self.mlflow_set_tag("model storage", self.model_storage_location)
 
     def mlflow_set_tag(self, key, value):

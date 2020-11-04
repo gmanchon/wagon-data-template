@@ -36,7 +36,7 @@ class Registry():
 
         # create tracking repository
         self.tracking_repository = TrackingRepository(
-            conf.tracking, self.experiment,
+            conf.tracking, self.experiment, self.run,
             code_storage_location, model_storage_location)
 
     # def experiments(self):
