@@ -7,6 +7,14 @@ make run                                # run trainer
 make run reg=True                       # run trainer with registry
 ```
 
+## tests
+
+``` bash
+make pytest file=tests/conf
+make pytest file=tests/code
+make pytest file=tests/registry
+```
+
 # todo
 
 ## sister projects

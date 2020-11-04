@@ -45,7 +45,7 @@ class TestConf(unittest.TestCase):
         self.assertEqual(self.conf.registry.model.bucket_name,
                          "wdt-test-validation-bucket")
         self.assertEqual(self.conf.registry.code.type, "git")
-        self.assertEqual(self.conf.registry.code.label_prefix, "kmp")
+        self.assertEqual(self.conf.registry.code.remote, "origin")
         self.assertEqual(self.conf.registry.code.foo.bar.toto, True)
         self.assertEqual(self.conf.registry.tracking.type, "mlflow")
         self.assertEqual(self.conf.registry.tracking.server,

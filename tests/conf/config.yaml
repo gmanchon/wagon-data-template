@@ -4,7 +4,6 @@ registry:
     bucket_name: wdt-test-validation-bucket
   code:
     type: git
-    label_prefix: kmp
     foo:
       bar:
         toto: True

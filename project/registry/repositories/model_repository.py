@@ -68,10 +68,10 @@ class ModelRepository():
 
         return runs
 
-    def get_model(self):
+    def get_model(self, run):
 
         # get storage path
-        storage_path = self.__get_model_storage_path()
+        storage_path = self.__get_model_storage_path(run)
 
         # build local model file path
         local_model_path = join(self.local_path, self.model_filename)
@@ -84,7 +84,11 @@ class ModelRepository():
         blob = bucket.blob(storage_model_path)
         blob.download_to_filename(local_model_path)
 
-    def __get_model_storage_path(self):
+    def __get_model_storage_path(self, run=None):
+
+        # default to current run
+        if run is None:
+            run = self.run
 
         # build storage path from expirement and current run
         storage_path = self.storage_path \

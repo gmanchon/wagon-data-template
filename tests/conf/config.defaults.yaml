@@ -8,7 +8,7 @@ registry:
     model_filename: model.joblib
   code:
     type: git
-    label_prefix: kmp
+    remote: origin
   tracking:
     type: mlflow
     server: https://url.of.the.mlflow.server/
