@@ -22,6 +22,10 @@ class TrackingRepository():
         # get conf
         self.mlflow_uri = conf.server
 
+        # remove trailing slash if any
+        if self.mlflow_uri[-1] == "/":
+            self.mlflow_uri = self.mlflow_uri[:-1]
+
         # create client
         mlflow.set_tracking_uri(self.mlflow_uri)
         self.mlflow_client = MlflowClient()
