@@ -29,7 +29,8 @@ class Registry():
         self.run = self.code_repository.get_commit_hash()
 
         # create model repository
-        self.model_repository = ModelRepository(conf.model, self.experiment)
+        self.model_repository = ModelRepository(
+            conf.model, self.experiment, self.run)
 
         # get model storage location
         model_storage_location = self.model_repository.get_storage_location()
