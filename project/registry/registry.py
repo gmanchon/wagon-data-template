@@ -39,23 +39,34 @@ class Registry():
             conf.tracking, self.experiment, self.run,
             code_storage_location, model_storage_location)
 
-    # def experiments(self):
-    # def experiment(self, experiment_name):
+    def is_git_status_clean(self):
 
-    def get_experiment(self):
+        # return git status
+        return self.code_repository.is_git_status_clean()
 
-        # return experiment
-        return self.experiment
+    def get_commit_hash(self):
 
-    # def runs(self, experiment_name):
-    # def run(self, experiment_name, id):
-    # def get_current_run(self):
-    # def new_run(self):
-    # def log_dataset(self, key, value):
-    # def log_preprocessing(self, items, name):
-    # def log_estimator(self, key, value):
-    # def log_hyperparam(self, key, value):
-    # def log_dict_hyperparam(self, items, name):
+        # return git status
+        return self.code_repository.get_commit_hash()
+
+    def log_model(self):
+
+        # check whether registry is enabled
+        if not self.enabled:
+            return
+
+        # store model
+        self.model_repository.store_model()
+
+    def list_models(self):
+
+        # list model
+        return self.model_repository.list_models()
+
+    def get_model(self, run):
+
+        # store model
+        self.model_repository.get_model(run)
 
     def log_param(self, key, value):
 
@@ -84,31 +95,21 @@ class Registry():
         # log dict param
         self.tracking_repository.mlflow_log_metric(key, value)
 
-    def log_model(self):
+    # def experiments(self):
+    # def experiment(self, experiment_name):
 
-        # check whether registry is enabled
-        if not self.enabled:
-            return
+    def get_experiment(self):
 
-        # store model
-        self.model_repository.store_model()
+        # return experiment
+        return self.experiment
 
-    def list_models(self):
+    # def runs(self, experiment_name):
+    # def run(self, experiment_name, id):
+    # def get_current_run(self):
+    # def new_run(self):
 
-        # list model
-        return self.model_repository.list_models()
-
-    def get_model(self, run):
-
-        # store model
-        self.model_repository.get_model(run)
-
-    def is_git_status_clean(self):
-
-        # return git status
-        return self.code_repository.is_git_status_clean()
-
-    def get_commit_hash(self):
-
-        # return git status
-        return self.code_repository.get_commit_hash()
+    # def log_dataset(self, key, value):
+    # def log_preprocessing(self, items, name):
+    # def log_estimator(self, key, value):
+    # def log_hyperparam(self, key, value):
+    # def log_dict_hyperparam(self, items, name):
