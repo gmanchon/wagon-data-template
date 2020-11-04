@@ -43,8 +43,13 @@ class CodeRepository():
 
             print(f"original remote url: {remote_url}")
 
+            # remove trailing .git in order to handle the cases
+            # where it may be missing
+            if remote_url[-4:] == ".git":
+                remote_url = remote_url[:-4]
+
             # retrieve user name and repo name
-            groups = re.search(r"git@github\.com:(.*)\/(.*)\.git", remote_url)
+            groups = re.search(r"git@github\.com:(.*)\/(.*)", remote_url)
 
             user_name = groups[1]
             repo_name = groups[2]
