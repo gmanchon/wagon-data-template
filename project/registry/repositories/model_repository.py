@@ -25,6 +25,10 @@ class ModelRepository():
         self.storage_client = storage.Client()
 
     def get_storage_location(self):
+        """
+        returns gcp model storage location
+        """
+
         storage_location = "https://console.cloud.google.com/storage" \
             + f"/browser/{self.bucket_name}" \
             + "/registry" \
@@ -34,6 +38,9 @@ class ModelRepository():
         return storage_location
 
     def store_model(self):
+        """
+        uploads model to gcp storage location
+        """
 
         # get storage path
         storage_path = self.__get_model_storage_path()
@@ -57,6 +64,9 @@ class ModelRepository():
               + store_location)
 
     def list_models(self):
+        """
+        returns a lists of gcp uploaded model runs (code commit hashes)
+        """
 
         # list blobs from bucket
         blobs = self.storage_client.list_blobs(self.bucket_name)
@@ -69,6 +79,9 @@ class ModelRepository():
         return runs
 
     def get_model(self, run):
+        """
+        downloads from gcp a model defined by its run (code commit hash)
+        """
 
         # get storage path
         storage_path = self.__get_model_storage_path(run)
@@ -85,6 +98,10 @@ class ModelRepository():
         blob.download_to_filename(local_model_path)
 
     def __get_model_storage_path(self, run=None):
+        """
+        returns model storage path on gcp depending on its run
+        (code commit hash)
+        """
 
         # default to current run
         if run is None:

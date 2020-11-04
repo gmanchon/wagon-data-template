@@ -28,6 +28,10 @@ class TrackingRepository():
 
     @memoized_property
     def mlflow_experiment_id(self):
+        """
+        retrieves experiment if it already exists or creates it
+        """
+
         try:
             # create experiment
             return self.mlflow_client.create_experiment(self.experiment_name)
@@ -37,6 +41,10 @@ class TrackingRepository():
                 self.experiment_name).experiment_id
 
     def mlflow_create_run(self):
+        """
+        creates run for experiment and stores code commit hash,
+        code storage location and model storage location in run tags
+        """
 
         # run only once (TODO: use memoized property ?)
         if hasattr(self, 'mlflow_run'):
@@ -61,12 +69,18 @@ class TrackingRepository():
             "model storage": self.model_storage_location})
 
     def mlflow_set_tag(self, key, value):
+        """
+        stores a tag in a run
+        """
 
         # set tag
         self.mlflow_client.set_tag(
             self.mlflow_run.info.run_id, key, value)
 
     def mlflow_set_tags(self, items):
+        """
+        stores multiple tags in a run
+        """
 
         # waiting for implementation of client set tags
         for key, value in items.items():
@@ -77,6 +91,9 @@ class TrackingRepository():
         #     self.mlflow_run.info.run_id, items)
 
     def mlflow_log_param(self, key, value):
+        """
+        logs a param in a run
+        """
 
         # create run
         self.mlflow_create_run()
@@ -87,6 +104,9 @@ class TrackingRepository():
             key, value)
 
     def mlflow_log_metric(self, key, value):
+        """
+        stores a metric in a run
+        """
 
         # create run
         self.mlflow_create_run()
@@ -97,6 +117,9 @@ class TrackingRepository():
             key, value)
 
     def mlflow_log_dict_param(self, dict, radix):
+        """
+        stores nested parameters in a run
+        """
 
         # create run
         self.mlflow_create_run()

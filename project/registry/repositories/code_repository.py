@@ -14,6 +14,9 @@ class CodeRepository():
         self.remote = conf.remote
 
     def get_storage_location(self):
+        """
+        retrieves the git url of the configured remote (origin by default)
+        """
 
         # list remotes
         git_remotes_cmd = f"git config --get remote.{self.remote}.url"
@@ -83,6 +86,9 @@ class CodeRepository():
         return "nothing to commit, working tree clean" in git_status
 
     def __get_latest_commit_hash(self):
+        """
+        retrieves latest commit hash from git
+        """
 
         # retrieve latest commit hash
         git_latest_commit_hash_cmd = "git rev-parse master"
