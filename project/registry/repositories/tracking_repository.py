@@ -31,8 +31,10 @@ class TrackingRepository():
             return self.mlflow_client.get_experiment_by_name(
                 self.experiment_name).experiment_id
 
-    @memoized_property
     def mlflow_create_run(self):
+
+        if self.mlflow_run is not None:
+            return
 
         print(Fore.GREEN + "\nCreating tracking run..."
               + Style.RESET_ALL)
