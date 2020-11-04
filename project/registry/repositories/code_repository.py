@@ -15,7 +15,7 @@ class CodeRepository():
 
         run_hash = self.__get_latest_commit_hash()
 
-        print(Fore.GREEN + "\nCode run: "
+        print(Fore.GREEN + "\nCode run (git commit hash): "
               + Style.RESET_ALL
               + run_hash)
 
