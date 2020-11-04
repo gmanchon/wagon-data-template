@@ -44,8 +44,9 @@ class ModelRepository():
             + f"/experiments/{experiment}" \
             + f"/runs/{run}"
 
-        print(Fore.GREEN + f"\nmodel stored at {store_location}..."
-              + Style.RESET_ALL)
+        print(Fore.GREEN + "\nModel stored at:"
+              + Style.RESET_ALL
+              + store_location)
 
     def list_models(self):
 
