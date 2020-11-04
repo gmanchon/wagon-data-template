@@ -2,6 +2,7 @@
 from project.registry.repositories.code_repository import CodeRepository
 # from project.registry.repositories.run_repository import RunRepository
 from project.registry.repositories.model_repository import ModelRepository
+from project.registry.repositories.tracking_repository import TrackingRepository
 
 
 class Registry():
@@ -9,6 +10,10 @@ class Registry():
     def __init__(self, conf, enabled):
 
         self.enabled = enabled
+
+        # check whether registry is enabled
+        if not self.enabled:
+            return
 
         # get conf
         self.conf = conf
@@ -18,6 +23,8 @@ class Registry():
         self.code_repository = CodeRepository(conf.code)
         # self.run_repository = RunRepository()
         self.model_repository = ModelRepository(conf.model)
+        self.tracking_repository = TrackingRepository(conf.tracking,
+                                                      self.experiment)
 
     # def experiments(self):
     #     pass
@@ -67,17 +74,26 @@ class Registry():
         if not self.enabled:
             return
 
+        # log param
+        self.tracking_repository.mlflow_log_param(key, value)
+
     def log_dict_param(self, items, name):
 
         # check whether registry is enabled
         if not self.enabled:
             return
 
+        # log dict param
+        self.tracking_repository.mlflow_log_dict_param(items, name)
+
     def log_metric(self, key, value):
 
         # check whether registry is enabled
         if not self.enabled:
             return
+
+        # log dict param
+        self.tracking_repository.mlflow_log_dict_param(key, value)
 
     def log_model(self):
 

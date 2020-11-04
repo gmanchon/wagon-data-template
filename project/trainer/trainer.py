@@ -1,6 +1,4 @@
 
-from project.registry.tracking.mlflow_base import MLFlowBase
-
 from project.data.data import get_data, clean_df
 from project.trainer.pipeline import ProjectPipeline
 from project.trainer.metrics import compute_rmse
@@ -12,21 +10,15 @@ import joblib
 from colorama import Fore, Style
 
 
-class Trainer(MLFlowBase):
+class Trainer():
 
-    def __init__(self, params):
+    def __init__(self, params, registry):
 
         # self.X_train, self.X_test, self.y_train, self.y_test
 
-        # experiment
-        experiment_name = '[FR] [Paris] [gmanchon] wagon data template'
-        mlflow_url = 'https://mlflow.lewagon.co/'
-
-        # calling mother class init
-        super().__init__(experiment_name, mlflow_url)
-
         # getting params
         self.params = params
+        self.registry = registry
 
         # getting trainer parameters
         self.trainer_params = self.params.get('trainer', dict())
@@ -104,16 +96,13 @@ class Trainer(MLFlowBase):
         # create pipeline
         self.pipeline = ProjectPipeline(self.trainer_params).create_pipeline()
 
-        # create a mlflow run
-        self.mlflow_create_run()
-
         # push params to mlflow
-        self.mlflow_log_param('rows', self.nrows)
-        self.mlflow_log_param('model', self.estimator)
+        self.registry.log_param('rows', self.nrows)
+        self.registry.log_param('model', self.estimator)
 
         # log dictionary params
-        self.mlflow_log_dict_param(self.hyperparams, "hyper")
-        self.mlflow_log_dict_param(self.pipe_params, "pipe")
+        self.registry.log_dict_param(self.hyperparams, "hyper")
+        self.registry.log_dict_param(self.pipe_params, "pipe")
 
         # train
         self.pipeline.fit(self.X_train, self.y_train)
@@ -125,9 +114,12 @@ class Trainer(MLFlowBase):
         rmse = compute_rmse(y_pred, self.y_test)
 
         # push metrics to mlflow
-        self.mlflow_log_metric('rmse', rmse)
+        self.registry.log_metric('rmse', rmse)
 
         # save model
         joblib.dump(self.pipeline, 'model.joblib')
+
+        # log model
+        self.registry.log_model()
 
         return rmse

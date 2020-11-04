@@ -46,6 +46,9 @@ class App:
               + str(self.conf_loader))
 
         # load registry
+        print(Fore.GREEN + "\nLoading registry..."
+              + Style.RESET_ALL)
+
         self.registry = Registry(self.conf.registry, REGISTRY_ENABLED)
 
         # getting data params
@@ -63,7 +66,7 @@ class App:
               + Style.RESET_ALL)
 
         # instanciating trainer
-        self.trainer = Trainer(params)
+        self.trainer = Trainer(params, self.registry)
 
     def check_registry(self, registry_enabled):
 
@@ -161,7 +164,6 @@ def main():
                     zone="America/New_York"))))
 
     app = App(params)
-    return
 
     if app.check_registry(REGISTRY_ENABLED):
 
