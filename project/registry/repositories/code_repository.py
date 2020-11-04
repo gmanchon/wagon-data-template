@@ -16,6 +16,10 @@ class CodeRepository():
     def get_storage_location(self):
         """
         retrieves the git url of the configured remote (origin by default)
+        handles remote formats:
+        - git@github.com:username/repo-name.git
+        - git@github.com:username/repo-name
+        - https://github.com/username/repo-name
         """
 
         # list remotes
