@@ -69,8 +69,6 @@ code inspiration for data eng week challenge, source projects
 - [ ] registry: add tdd tests
 - [x] registry run repo: add create new runs
 - [x] registry run repo: add tests
-- [x] registry tracking repo: auto parse nested parameters
-- [x] registry tracking repo: upload tracking to mlflow
 - [x] registry model repo: upload trained model to gcs
 - [x] registry model repo: download trained model from gcs
 - [x] registry model repo: list trained models from gcs
@@ -78,11 +76,13 @@ code inspiration for data eng week challenge, source projects
 - [x] registry code repo: check git status
 - [ ] registry code repo: sqlite because several runs can occur for the same commit
 - [ ] registry code repo: auto commit if required and label trained code
+- [x] registry tracking repo: auto parse nested parameters
+- [x] registry tracking repo: upload tracking to mlflow
+- [x] registry tracking repo: store code repo and model repo locations in run
 
-- [ ] registry: do not store all runs ? / Bruno
+- [x] app: option to run with registry (requires a clean git status)
 
 - [ ] trainer: use yaml files in source control for params and hyperparams ?
-- [ ] trainer: require clean git status to launch a training (option to ignore ?)
 
 - [x] train locally
 - [ ] train on colab

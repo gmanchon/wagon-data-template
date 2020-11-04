@@ -11,10 +11,14 @@ from colorama import Fore, Style
 
 class TrackingRepository():
 
-    def __init__(self, conf, experiment_name):
+    def __init__(self, conf, experiment_name,
+                 code_storage_location, model_storage_location):
+
+        self.experiment_name = experiment_name
+        self.code_storage_location = code_storage_location
+        self.model_storage_location = model_storage_location
 
         # get conf
-        self.experiment_name = experiment_name
         self.mlflow_uri = conf.server
 
         # create client
@@ -33,6 +37,7 @@ class TrackingRepository():
 
     def mlflow_create_run(self):
 
+        # run only once (TODO: use memoized property ?)
         if hasattr(self, 'mlflow_run'):
             return
 
@@ -47,6 +52,16 @@ class TrackingRepository():
               + f"{self.mlflow_uri}/#"
               + f"/experiments/{self.mlflow_experiment_id}"
               + f"/runs/{self.mlflow_run.info.run_id}")
+
+        # set run tags
+        self.mlflow_set_tag("code storage", self.code_storage_location)
+        self.mlflow_set_tag("model storage", self.model_storage_location)
+
+    def mlflow_set_tag(self, key, value):
+
+        # set tag
+        self.mlflow_client.set_tag(
+            self.mlflow_run.info.run_id, key, value)
 
     def mlflow_log_param(self, key, value):
 

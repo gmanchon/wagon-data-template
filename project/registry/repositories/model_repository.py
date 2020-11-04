@@ -10,7 +10,10 @@ import re
 
 class ModelRepository():
 
-    def __init__(self, conf):
+    def __init__(self, conf, experiment_name, run):
+
+        self.experiment_name = experiment_name
+        self.run = run
 
         # get conf
         self.bucket_name = conf.bucket_name
@@ -21,10 +24,19 @@ class ModelRepository():
         # client
         self.storage_client = storage.Client()
 
-    def store_model(self, experiment, run):
+    def get_storage_location(self):
+        storage_location = "https://console.cloud.google.com/storage" \
+            + f"/browser/{self.bucket_name}" \
+            + "/registry" \
+            + f"/experiments/{self.experiment_name}" \
+            + f"/runs/{self.run}"
+
+        return storage_location
+
+    def store_model(self):
 
         # get storage path
-        storage_path = self.__get_model_storage_path(experiment, run)
+        storage_path = self.__get_model_storage_path()
 
         # build local model file path
         local_model_path = join(self.local_path, self.model_filename)
@@ -37,12 +49,8 @@ class ModelRepository():
         blob = bucket.blob(storage_model_path)
         blob.upload_from_filename(local_model_path)
 
-        # build storage location link
-        store_location = "https://console.cloud.google.com/storage" \
-            + f"/browser/{self.bucket_name}" \
-            + "/registry" \
-            + f"/experiments/{experiment}" \
-            + f"/runs/{run}"
+        # show storage location
+        store_location = self.get_storage_location()
 
         print(Fore.GREEN + "\nModel stored at:\n"
               + Style.RESET_ALL
@@ -60,10 +68,10 @@ class ModelRepository():
 
         return runs
 
-    def get_model(self, experiment, run):
+    def get_model(self):
 
         # get storage path
-        storage_path = self.__get_model_storage_path(experiment, run)
+        storage_path = self.__get_model_storage_path()
 
         # build local model file path
         local_model_path = join(self.local_path, self.model_filename)
@@ -76,11 +84,11 @@ class ModelRepository():
         blob = bucket.blob(storage_model_path)
         blob.download_to_filename(local_model_path)
 
-    def __get_model_storage_path(self, experiment, run):
+    def __get_model_storage_path(self):
 
         # build storage path from expirement and current run
         storage_path = self.storage_path \
-            .replace(":experiment", experiment) \
-            .replace(":run", run)
+            .replace(":experiment", self.experiment_name) \
+            .replace(":run", self.run)
 
         return storage_path

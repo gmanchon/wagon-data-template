@@ -1,6 +1,8 @@
 
 from colorama import Fore, Style
 
+import re
+
 import os
 
 
@@ -9,7 +11,46 @@ class CodeRepository():
     def __init__(self, conf):
 
         # get conf
-        self.label_prefix = conf.label_prefix
+        self.remote = conf.remote
+
+    def get_storage_location(self):
+
+        # list remotes
+        git_remotes_cmd = f"git config --get remote.{self.remote}.url"
+
+        remote_url = os.popen(git_remotes_cmd).read().strip()
+
+        # check if remote is configured
+        if not remote_url:
+            print(Fore.RED
+                  + "⚠️  Could not determine git remote url."
+                  + " Please make sure it is correctly configured in"
+                  + " config.yaml under `registry.code.remote`. "
+                  + "If the repository does not have a remote, make sure to"
+                  + " add one (on GitHub or any other repository storage"
+                  + " service). "
+                  + "The code needs to be backed up in order to be reliably"
+                  + " deployed on production"
+                  + Style.RESET_ALL)
+
+            return "⚠️ git remote not configured"
+
+        # parse remote
+        if remote_url[:4] == "git@":
+
+            print(f"original remote url: {remote_url}")
+
+            # retrieve user name and repo name
+            groups = re.search(r"git@github\.com:(.*)\/(.*)\.git", remote_url)
+
+            user_name = groups[1]
+            repo_name = groups[2]
+
+            remote_url = f"https://github.com/{user_name}/{repo_name}"
+
+        print(f"remote url: {remote_url}")
+
+        return remote_url
 
     def get_commit_hash(self):
 

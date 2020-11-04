@@ -19,12 +19,25 @@ class Registry():
         self.conf = conf
         self.experiment = self.conf.experiment_name
 
-        # create repositories
+        # create code repository
         self.code_repository = CodeRepository(conf.code)
-        # self.run_repository = RunRepository()
-        self.model_repository = ModelRepository(conf.model)
-        self.tracking_repository = TrackingRepository(conf.tracking,
-                                                      self.experiment)
+
+        # get code storage location
+        code_storage_location = self.code_repository.get_storage_location()
+
+        # get current run (current code commit hash)
+        self.run = self.code_repository.get_commit_hash()
+
+        # create model repository
+        self.model_repository = ModelRepository(conf.model, self.experiment)
+
+        # get model storage location
+        model_storage_location = self.model_repository.get_storage_location()
+
+        # create tracking repository
+        self.tracking_repository = TrackingRepository(
+            conf.tracking, self.experiment,
+            code_storage_location, model_storage_location)
 
     # def experiments(self):
     #     pass
@@ -101,12 +114,8 @@ class Registry():
         if not self.enabled:
             return
 
-        # get current run (current code commit hash)
-        run = self.code_repository.get_commit_hash()
-        # run = self.run_repository.get_current_run()
-
         # store model
-        self.model_repository.store_model(self.experiment, run)
+        self.model_repository.store_model()
 
     def list_models(self):
 
@@ -116,7 +125,7 @@ class Registry():
     def get_model(self, run):
 
         # store model
-        self.model_repository.get_model(self.experiment, run)
+        self.model_repository.get_model(run)
 
     def is_git_status_clean(self):
 
