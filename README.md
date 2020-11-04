@@ -48,9 +48,11 @@ code inspiration for data eng week challenge, source projects
 - [x] makefile: packages
 - [x] makefile: add pytest and pylint
 - [x] makefile: add test per directory
+- [ ] makefile: make activate_env directive does not work
 - [ ] makefile: clean pylint
 
 - [x] notebook: load project
+- [ ] notebook: usage similar to command line
 
 - [x] conf: test hydra vs dotenv
 - [x] conf: use yaml + transform conf dictionary into object attributes
@@ -61,27 +63,23 @@ code inspiration for data eng week challenge, source projects
 - [x] conf: show diff between defaults and conf params in logs
 - [x] conf: add tests
 - [x] conf: highlight conf present in projects and absent from defaults
-- [ ] conf: use conf for prod parameters
-- [ ] conf: propagate configuration in conf consuming objects
-- [ ] conf: handle missing defaults
+- [x] conf: propagate configuration in conf consuming objects
+- [x] conf: handle missing defaults
+- [ ] conf: option for the nested parameters dict using the scikit double underscore syntax
+- [ ] conf: add syntax validation for the nested parameters dict (warn for erroneous param syntax)
 - [ ] conf: handle invalid yaml file
 
 - [x] app: use app + model + pipeline nested parameters
+- [x] app: option to run with registry (requires a clean git status)
 
-- [ ] app: use hydra conf for nested params
-- [ ] app: option for the nested parameters dict using the scikit double underscore syntax
-- [ ] app: add syntax validation for the nested parameters dict (warn for erroneous param syntax)
-
-- [x] trainer: log training steps in cli
-
-- [ ] registry: add tdd tests
+- [ ] registry repos: add tdd tests
 
 - [x] registry run repo: add create new runs
 - [x] registry run repo: add tests
 
 - [x] registry code repo: check git status
+- [x] registry code repo: use code commit hash as run id instead of using labels to store run id
 - [ ] registry code repo: sqlite because several runs can occur for the same commit
-- [ ] registry code repo: auto commit if required and label trained code
 
 - [x] registry model repo: upload trained model to gcs
 - [x] registry model repo: download trained model from gcs
@@ -93,9 +91,8 @@ code inspiration for data eng week challenge, source projects
 - [x] registry tracking repo: store code repo and model repo locations in run
 - [ ] registry tracking repo: use log_params for mlflow_log_dict_param
 
-- [x] app: option to run with registry (requires a clean git status)
-
-- [ ] trainer: use yaml files in source control for params and hyperparams ?
+- [x] trainer: log training steps in cli
+- [ ] trainer: use yaml files in source control for params and hyperparams
 
 - [x] train locally
 - [ ] train on colab
@@ -113,8 +110,6 @@ code inspiration for data eng week challenge, source projects
 - [ ] gridsearch: progress bar on aipf ?
 
 - [ ] tracking: train time
-
-- [ ] env: make activate_env directive does not work
 
 - [ ] test: pipeline steps outcome
 
