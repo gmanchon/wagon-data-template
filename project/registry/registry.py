@@ -93,7 +93,7 @@ class Registry():
             return
 
         # log dict param
-        self.tracking_repository.mlflow_log_dict_param(key, value)
+        self.tracking_repository.mlflow_log_metric(key, value)
 
     def log_model(self):
 
