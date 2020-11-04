@@ -46,7 +46,7 @@ class TrackingRepository():
               + Style.RESET_ALL
               + f"{self.mlflow_uri}/#"
               + f"/experiments/{self.mlflow_experiment_id}"
-              + f"/runs/{self.mlflow_run}")
+              + f"/runs/{self.mlflow_run.info.run_id}")
 
     def mlflow_log_param(self, key, value):
 

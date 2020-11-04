@@ -139,7 +139,7 @@ class App:
         # running trainer
         rmse = self.trainer.train()
 
-        print(Fore.GREEN + "Model trained, rmse: %s 👍"
+        print(Fore.GREEN + "\nModel trained, rmse: %s 👍"
               % rmse
               + Style.RESET_ALL)
 
