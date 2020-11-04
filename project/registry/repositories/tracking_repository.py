@@ -69,7 +69,7 @@ class TrackingRepository():
     def mlflow_set_tags(self, items):
 
         # waiting for implementation of client set tags
-        for key, value in items:
+        for key, value in items.items():
             self.mlflow_set_tag(key, value)
 
         # set tags
