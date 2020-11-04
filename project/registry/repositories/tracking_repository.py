@@ -55,9 +55,10 @@ class TrackingRepository():
               + f"/runs/{self.mlflow_run.info.run_id}")
 
         # set run tags
-        self.mlflow_set_tag("code storage", self.code_storage_location)
-        self.mlflow_set_tag("code commit hash", self.code_commit_hash)
-        self.mlflow_set_tag("model storage", self.model_storage_location)
+        self.mlflow_set_tags({
+            "code storage": self.code_storage_location,
+            "code commit hash": self.code_commit_hash,
+            "model storage": self.model_storage_location})
 
     def mlflow_set_tag(self, key, value):
 

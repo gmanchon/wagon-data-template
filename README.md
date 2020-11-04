@@ -91,6 +91,7 @@ code inspiration for data eng week challenge, source projects
 - [x] registry tracking repo: auto parse nested parameters
 - [x] registry tracking repo: upload tracking to mlflow
 - [x] registry tracking repo: store code repo and model repo locations in run
+- [ ] registry tracking repo: use log_params for mlflow_log_dict_param
 
 - [x] app: option to run with registry (requires a clean git status)
 
