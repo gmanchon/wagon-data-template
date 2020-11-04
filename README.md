@@ -1,4 +1,12 @@
 
+# usage
+
+``` bash
+python -m project.app                   # run trainer
+make run                                # run trainer
+make run reg=True                       # run trainer with registry
+```
+
 # todo
 
 ## sister projects
@@ -193,9 +201,3 @@ en semaine 2 on labelise une baseline
 - [ ] nlp: reintegrate a nlp project
 
 - [ ] deep: reintegrate a deep project / Zuza ?
-
-# usage
-
-``` bash
-python -m project.app                   # run trainer
-```

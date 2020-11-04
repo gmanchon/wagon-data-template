@@ -12,7 +12,16 @@ from colorama import Fore, Style
 import os
 
 
-REGISTRY_ENABLED = False
+REGISTRY_ENABLED = os.environ.get("reg")
+
+if REGISTRY_ENABLED:
+
+    print(Fore.GREEN + "\n✅ Registry enabled"
+          + Style.RESET_ALL)
+
+else:
+    print(Fore.GREEN + "\n❌ Registry disabled"
+          + Style.RESET_ALL)
 
 
 class App:
@@ -152,6 +161,7 @@ def main():
                     zone="America/New_York"))))
 
     app = App(params)
+    return
 
     if app.check_registry(REGISTRY_ENABLED):
 

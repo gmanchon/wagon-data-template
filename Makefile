@@ -38,4 +38,4 @@ pytest:
 	PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes $(file)
 
 run:
-	python -m project.app
+	python -m project.app $(reg)
