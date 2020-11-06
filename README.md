@@ -36,7 +36,7 @@ docker build --tag=test .
 run local image
 
 ``` bash
-docker run -p 8000:8000 test
+docker run -e PORT=8000 -p 8000:8000 test
 ```
 
 connect to http://localhost:8000/
@@ -47,6 +47,7 @@ docker ps
 
 ``` bash
 docker stop <container id>
+docker kill <container id>
 ```
 
 ## api container on GCR
