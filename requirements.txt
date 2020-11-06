@@ -9,4 +9,6 @@ sklearn
 memoized_property
 mlflow
 joblib
+flask
+uvicorn
 colorama
