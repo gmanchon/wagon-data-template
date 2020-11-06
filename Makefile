@@ -39,3 +39,9 @@ pytest:
 
 run:
 	python -m project.app $(reg)
+
+# - - - - - - - - - - - - - - - - - - - - - - - -
+# api
+
+run_api:
+	env FLASK_APP=api.flask flask run
