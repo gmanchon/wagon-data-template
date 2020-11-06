@@ -93,8 +93,20 @@ build image
 docker build -t eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME .
 ```
 
+make sure the image runs
+
+``` bash
+docker run -p 8000:8000 eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+```
+
 push image to Google Container Registry
 
 ``` bash
 docker push eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+```
+
+deploy on cloud run
+
+``` bash
+gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform managed --region europe-west1
 ```
