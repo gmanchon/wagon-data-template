@@ -41,6 +41,18 @@ run:
 	python -m project.app $(reg)
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
+# gcp configuration
+gcp_conf:
+	export PROJECT_ID=le-wagon-data
+	export DOCKER_IMAGE_NAME=le_wagon_data_image
+	export CLUSTER_NAME=wag_data_tpl_cluster
+
+show_gcp_conf:
+	@echo "PROJECT_ID: ${PROJECT_ID}"
+	@echo "DOCKER_IMAGE_NAME: ${DOCKER_IMAGE_NAME}"
+	@echo "CLUSTER_NAME: ${CLUSTER_NAME}"
+
+# - - - - - - - - - - - - - - - - - - - - - - - -
 # api
 
 run_api:
