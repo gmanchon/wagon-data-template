@@ -1,7 +1,7 @@
 
 # usage
 
-## project
+## Project
 
 run trainer
 
@@ -25,7 +25,7 @@ make pytest file=tests/registry
 make run_api
 ```
 
-## api container locally
+## Create and use API container image locally
 
 build local image
 
@@ -50,7 +50,7 @@ docker stop <container id>
 docker kill <container id>
 ```
 
-## deploy image on Google Container Registry
+## Create and deploy container image on Google Container Registry
 
 enable [Google Container Registry API](https://console.cloud.google.com/flows/enableapi?apiid=containerregistry.googleapis.com&redirect=https://cloud.google.com/container-registry/docs/quickstart
 ) for your project
@@ -106,7 +106,7 @@ push image to Google Container Registry
 docker push eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
 ```
 
-## api using deployed image on GCR
+## Deploy API container image on Google Cloud Run
 
 deploy on cloud run
 
@@ -116,7 +116,7 @@ gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform ma
 
 you are now able to browse to the deployed url and make a prediction using the API notebook for GCR
 
-## api container on GKE
+## Deploy API container image on Google Kubernetes Engine
 
 define a cluster name
 
@@ -156,6 +156,15 @@ Service [wagon-data-tpl-image] revision [wagon-data-tpl-image-00001-kup] has bee
 Service URL: https://wagon-data-tpl-image-xi54eseqrq-ew.a.run.app
 ```
 
+``` txt
+Creating cluster wagon-data-tpl-cluster in europe-west1... Cluster is being health-checked (master is healthy)...done.
+Created [https://container.googleapis.com/v1/projects/le-wagon-data/zones/europe-west1/clusters/wagon-data-tpl-cluster].
+To inspect the contents of your cluster, go to: https://console.cloud.google.com/kubernetes/workload_/gcloud/europe-west1/wagon-data-tpl-cluster?project=le-wagon-data
+kubeconfig entry generated for wagon-data-tpl-cluster.
+NAME                    LOCATION      MASTER_VERSION   MASTER_IP     MACHINE_TYPE   NODE_VERSION     NUM_NODES  STATUS
+wagon-data-tpl-cluster  europe-west1  1.16.13-gke.401  35.195.38.77  n1-standard-1  1.16.13-gke.401  6          RUNNING
+```
+
 you can [access the cluster](https://console.cloud.google.com/kubernetes/list?project=le-wagon-data)
 and [inspect the content of the cluster](https://console.cloud.google.com/kubernetes/workload_/gcloud/europe-west1-c/wag-data-tpl-cluster?project=le-wagon-data)
 
@@ -166,14 +175,46 @@ you can [delete the cluster](https://console.cloud.google.com/kubernetes/list) a
 create deployment name
 
 ``` bash
-export DEPLOYMENT_NAME=depl-name
+export DEPLOYMENT_NAME=$DEPLOYMENT_NAME
 echo $DEPLOYMENT_NAME
 ```
 
 deploy docker image to the cluster
 
-```bash
+``` bash
 kubectl create deployment $DEPLOYMENT_NAME --image gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
 ```
 
-you are now able to browse to the deployed url and make a prediction using the API notebook for GKE
+``` bash
+kubectl expose deployment $DEPLOYMENT_NAME --type=LoadBalancer --port 80 --target-port 8000
+```
+
+```bash
+kubectl get svc --watch
+```
+
+``` txt
+NAME                 TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+kubernetes           ClusterIP      10.111.240.1     <none>        443/TCP        18m
+ml-kube-deployment   LoadBalancer   10.111.246.169   <pending>     80:32076/TCP   9s
+```
+
+``` txt
+NAME                 TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
+kubernetes           ClusterIP      10.111.240.1     <none>          443/TCP        19m
+ml-kube-deployment   LoadBalancer   10.111.246.169   35.240.48.112   80:32076/TCP   48s
+```
+
+## Delete Google Kubernetes Engine cluster once usage is done
+
+delete the deployment
+
+```bash
+kubectl delete deployment $DEPLOYMENT_NAME
+```
+
+delete the cluster
+
+```bash
+gcloud container clusters delete ml-cluster
+```

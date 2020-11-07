@@ -46,11 +46,13 @@ gcp_conf:
 	export PROJECT_ID=le-wagon-data
 	export DOCKER_IMAGE_NAME=wagon-data-tpl-image
 	export CLUSTER_NAME=wagon-data-tpl-cluster
+	export DEPLOYMENT_NAME=ml-kube-deployment
 
 show_gcp_conf:
 	@echo "PROJECT_ID: ${PROJECT_ID}"
 	@echo "DOCKER_IMAGE_NAME: ${DOCKER_IMAGE_NAME}"
 	@echo "CLUSTER_NAME: ${CLUSTER_NAME}"
+	@echo "DEPLOYMENT_NAME: ${DEPLOYMENT_NAME}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # api
