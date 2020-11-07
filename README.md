@@ -1,17 +1,7 @@
 
 # usage
 
-## Project
-
-run trainer
-
-``` bash
-python -m project.app                   # run trainer
-make run                                # run trainer
-make run reg=True                       # run trainer with registry
-```
-
-run tests
+## Run project tests
 
 ``` bash
 make pytest file=tests/conf
@@ -19,13 +9,21 @@ make pytest file=tests/code
 make pytest file=tests/registry
 ```
 
-## api locally
+## Run project trainer
+
+``` bash
+python -m project.app                   # run trainer
+make run                                # run trainer
+make run reg=True                       # run trainer with registry
+```
+
+## Run project prediction API locally
 
 ``` bash
 make run_api
 ```
 
-## Create and use API container image locally
+## Create a prediction API container image and use it locally
 
 build local image
 
@@ -50,7 +48,7 @@ docker stop <container id>
 docker kill <container id>
 ```
 
-## Create and deploy container image on Google Container Registry
+## Create a prediction API container image and deploy on Google Container Registry
 
 enable [Google Container Registry API](https://console.cloud.google.com/flows/enableapi?apiid=containerregistry.googleapis.com&redirect=https://cloud.google.com/container-registry/docs/quickstart
 ) for your project
@@ -106,7 +104,7 @@ push image to Google Container Registry
 docker push eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
 ```
 
-## Deploy API container image on Google Cloud Run
+## Deploy prediction API container image on Google Cloud Run
 
 deploy on cloud run
 
@@ -116,7 +114,7 @@ gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform ma
 
 you are now able to browse to the deployed url and make a prediction using the API notebook for GCR
 
-## Deploy API container image on Google Kubernetes Engine
+## Deploy prediction API container image on Google Kubernetes Engine
 
 define a cluster name
 
