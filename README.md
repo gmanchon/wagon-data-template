@@ -50,7 +50,7 @@ docker stop <container id>
 docker kill <container id>
 ```
 
-## api container on GCR
+## deploy image on Google Container Registry
 
 enable [Google Container Registry API](https://console.cloud.google.com/flows/enableapi?apiid=containerregistry.googleapis.com&redirect=https://cloud.google.com/container-registry/docs/quickstart
 ) for your project
@@ -106,8 +106,74 @@ push image to Google Container Registry
 docker push eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
 ```
 
+## api using deployed image on GCR
+
 deploy on cloud run
 
 ``` bash
 gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform managed --region europe-west1
 ```
+
+you are now able to browse to the deployed url and make a prediction using the API notebook for GCR
+
+## api container on GKE
+
+define a cluster name
+
+``` bash
+export CLUSTER_NAME=replace_with_your_docker_image_name
+echo $CLUSTER_NAME
+```
+
+select a region from the [region list](https://cloud.google.com/compute/docs/regions-zones)
+
+``` bash
+gcloud container clusters create $CLUSTER_NAME --num-nodes 2 --region europe-west1
+```
+
+you should see the output
+
+``` txt
+Creating cluster wag-data-tpl-cluster in europe-west1-c... Cluster is being health-checked (master is healthy)...done.
+Created [https://container.googleapis.com/v1/projects/le-wagon-data/zones/europe-west1-c/clusters/wag-data-tpl-cluster].
+To inspect the contents of your cluster, go to: https://console.cloud.google.com/kubernetes/workload_/gcloud/europe-west1-c/wag-data-tpl-cluster?project=le-wagon-data
+kubeconfig entry generated for wag-data-tpl-cluster.
+NAME                  LOCATION        MASTER_VERSION   MASTER_IP       MACHINE_TYPE   NODE_VERSION     NUM_NODES  STATUS
+wag-data-tpl-cluster  europe-west1-c  1.16.13-gke.401  35.241.244.188  n1-standard-1  1.16.13-gke.401  2          RUNNING
+```
+
+``` txt
+Service name (wagon-data-tpl-image):
+Allow unauthenticated invocations to [wagon-data-tpl-image] (y/N)?  y
+
+Deploying container to Cloud Run service [wagon-data-tpl-image] in project [le-wagon-data] region [europe-west1]
+✓ Deploying new service... Done.
+  ✓ Creating Revision... Revision deployment finished. Waiting for health check to begin.
+  ✓ Routing traffic...
+  ✓ Setting IAM Policy...
+Done.
+Service [wagon-data-tpl-image] revision [wagon-data-tpl-image-00001-kup] has been deployed and is serving 100 percent of traffic.
+Service URL: https://wagon-data-tpl-image-xi54eseqrq-ew.a.run.app
+```
+
+you can [access the cluster](https://console.cloud.google.com/kubernetes/list?project=le-wagon-data)
+and [inspect the content of the cluster](https://console.cloud.google.com/kubernetes/workload_/gcloud/europe-west1-c/wag-data-tpl-cluster?project=le-wagon-data)
+
+the started instances are visible in [compute engine](https://console.cloud.google.com/compute/instances)
+
+you can [delete the cluster](https://console.cloud.google.com/kubernetes/list) at anytime to stop it from running
+
+create deployment name
+
+``` bash
+export DEPLOYMENT_NAME=depl-name
+echo $DEPLOYMENT_NAME
+```
+
+deploy docker image to the cluster
+
+```bash
+kubectl create deployment $DEPLOYMENT_NAME --image gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+```
+
+you are now able to browse to the deployed url and make a prediction using the API notebook for GKE
