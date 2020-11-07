@@ -184,6 +184,12 @@ kubectl create deployment $DEPLOYMENT_NAME --image eu.gcr.io/$PROJECT_ID/$DOCKER
 kubectl expose deployment $DEPLOYMENT_NAME --type=LoadBalancer --port 80 --target-port 8000
 ```
 
+retrieve external ip address
+
+``` bash
+kubectl get service
+```
+
 ```bash
 kubectl get svc --watch
 ```
@@ -217,3 +223,10 @@ delete the cluster
 ```bash
 gcloud container clusters delete $CLUSTER_NAME --region europe-west1
 ```
+
+# Create a budget alert
+
+Go to Billing / Budgets & alerts
+- CREATE BUDGET
+
+or [follow the guide](https://cloud.google.com/billing/docs/how-to/budgets#add-new-budget)
