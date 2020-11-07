@@ -163,6 +163,45 @@ the started instances are visible in [compute engine](https://console.cloud.goog
 
 you can [delete the cluster](https://console.cloud.google.com/kubernetes/list) at anytime to stop it from running
 
+optionally customize the parameters of the machine in a gke.yaml file
+
+(replace ml-kube-deployment)
+
+``` bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ml-kube-deployment
+  name: ml-kube-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ml-kube-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ml-kube-deployment
+    spec:
+      containers:
+      - image: gcr.io/$GCP_PROJECT_ID/ml-kube-deployment
+        name: ml-kube-deployment
+        resources:
+          requests:
+            memory: "4G"
+status: {}
+```
+
+and apply the configuration
+
+``` bash
+echo gke.yaml | kubectl apply -f -
+```
+
 create deployment name
 
 ``` bash
