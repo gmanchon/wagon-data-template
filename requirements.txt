@@ -3,6 +3,9 @@ numpy
 pandas
 fsspec
 s3fs
+gcsfs
+google-cloud
+google-cloud-storage
 pygeohash
 category_encoders
 sklearn
