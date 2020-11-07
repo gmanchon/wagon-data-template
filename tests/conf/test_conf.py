@@ -23,8 +23,8 @@ class TestConf(unittest.TestCase):
 
         # load conf from test folder defaults and project file
         project_path = dirname(__file__)
-        project_conf_path = join(project_path, "config.yaml")
-        defaults_conf_path = join(project_path, "config.defaults.yaml")
+        project_conf_path = join(project_path, "app.yaml")
+        defaults_conf_path = join(project_path, "app.defaults.yaml")
         conf_loader = ConfLoader(project_conf_path, defaults_conf_path)
 
         return conf_loader

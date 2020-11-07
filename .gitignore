@@ -5,4 +5,4 @@ __pycache__
 *.egg-info
 mlruns
 model.joblib
-/config.yaml
+/app.yaml

@@ -41,13 +41,13 @@ code inspiration for data eng week challenge, source projects
 - [x] conf: test hydra vs dotenv
 - [x] conf: use yaml + transform conf dictionary into object attributes
 
-- [x] conf: gitignore conf.yaml and use config.yaml as sample
+- [x] conf: gitignore app.yaml and use app.yaml as sample
 - [x] conf: add representation for conf objects
 - [x] conf: handle default params for conf
 - [x] conf: show diff between defaults and conf params in logs
 - [x] conf: add tests
 - [x] conf: highlight conf present in projects and absent from defaults
-- [x] conf: propagate configuration in conf consuming objects
+- [x] conf: propagate app configuration in conf consuming objects
 - [x] conf: handle missing defaults
 - [ ] conf: option for the nested parameters dict using the scikit double underscore syntax
 - [ ] conf: add syntax validation for the nested parameters dict (warn for erroneous param syntax)

@@ -32,7 +32,7 @@ class CodeRepository():
             print(Fore.RED
                   + "⚠️  Could not determine git remote url."
                   + " Please make sure it is correctly configured in"
-                  + " config.yaml under `registry.code.remote`. "
+                  + " app.yaml under `registry.code.remote`. "
                   + "If the repository does not have a remote, make sure to"
                   + " add one (on GitHub or any other repository storage"
                   + " service). "
