@@ -74,7 +74,7 @@ gcloud config list
 configure your project
 
 ``` bash
-export PROJECT_ID=replace-with-my-gcloud-project-id
+export PROJECT_ID=replace-with-gcloud-project-id
 echo $PROJECT_ID
 gcloud config set project $PROJECT_ID
 ```
@@ -82,7 +82,7 @@ gcloud config set project $PROJECT_ID
 define a docker image name for your project
 
 ``` bash
-export DOCKER_IMAGE_NAME=replace_with_your_docker_image_name
+export DOCKER_IMAGE_NAME=define-some-container-image-name
 echo $DOCKER_IMAGE_NAME
 ```
 
@@ -135,7 +135,7 @@ you are now able to browse to the deployed url and make a prediction using the A
 define a cluster name
 
 ``` bash
-export CLUSTER_NAME=replace_with_your_docker_image_name
+export CLUSTER_NAME=define-some-cluster-name
 echo $CLUSTER_NAME
 ```
 
@@ -166,7 +166,7 @@ you can [delete the cluster](https://console.cloud.google.com/kubernetes/list) a
 create deployment name
 
 ``` bash
-export DEPLOYMENT_NAME=$DEPLOYMENT_NAME
+export DEPLOYMENT_NAME=define-some-deployment-name
 echo $DEPLOYMENT_NAME
 ```
 
