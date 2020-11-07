@@ -181,17 +181,13 @@ kubectl create deployment $DEPLOYMENT_NAME --image eu.gcr.io/$PROJECT_ID/$DOCKER
 ```
 
 ``` bash
-kubectl expose deployment $DEPLOYMENT_NAME --type=LoadBalancer --port 80 --target-port 8000
+kubectl expose deployment $DEPLOYMENT_NAME --type=LoadBalancer --port 80 --target-port 5000
 ```
 
 retrieve external ip address
 
-``` bash
-kubectl get service
-```
-
 ```bash
-kubectl get svc --watch
+kubectl get service --watch
 ```
 
 ``` txt
