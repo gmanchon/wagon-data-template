@@ -112,6 +112,22 @@ deploy on cloud run
 gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform managed --region europe-west1
 ```
 
+you should see the output
+
+``` txt
+Service name (wagon-data-tpl-image):
+Allow unauthenticated invocations to [wagon-data-tpl-image] (y/N)?  y
+
+Deploying container to Cloud Run service [wagon-data-tpl-image] in project [le-wagon-data] region [europe-west1]
+✓ Deploying new service... Done.
+  ✓ Creating Revision... Revision deployment finished. Waiting for health check to begin.
+  ✓ Routing traffic...
+  ✓ Setting IAM Policy...
+Done.
+Service [wagon-data-tpl-image] revision [wagon-data-tpl-image-00001-kup] has been deployed and is serving 100 percent of traffic.
+Service URL: https://wagon-data-tpl-image-xi54eseqrq-ew.a.run.app
+```
+
 you are now able to browse to the deployed url and make a prediction using the API notebook for GCR
 
 ## Deploy prediction API container image on Google Kubernetes Engine
@@ -130,29 +146,6 @@ gcloud container clusters create $CLUSTER_NAME --num-nodes 2 --region europe-wes
 ```
 
 you should see the output
-
-``` txt
-Creating cluster wag-data-tpl-cluster in europe-west1-c... Cluster is being health-checked (master is healthy)...done.
-Created [https://container.googleapis.com/v1/projects/le-wagon-data/zones/europe-west1-c/clusters/wag-data-tpl-cluster].
-To inspect the contents of your cluster, go to: https://console.cloud.google.com/kubernetes/workload_/gcloud/europe-west1-c/wag-data-tpl-cluster?project=le-wagon-data
-kubeconfig entry generated for wag-data-tpl-cluster.
-NAME                  LOCATION        MASTER_VERSION   MASTER_IP       MACHINE_TYPE   NODE_VERSION     NUM_NODES  STATUS
-wag-data-tpl-cluster  europe-west1-c  1.16.13-gke.401  35.241.244.188  n1-standard-1  1.16.13-gke.401  2          RUNNING
-```
-
-``` txt
-Service name (wagon-data-tpl-image):
-Allow unauthenticated invocations to [wagon-data-tpl-image] (y/N)?  y
-
-Deploying container to Cloud Run service [wagon-data-tpl-image] in project [le-wagon-data] region [europe-west1]
-✓ Deploying new service... Done.
-  ✓ Creating Revision... Revision deployment finished. Waiting for health check to begin.
-  ✓ Routing traffic...
-  ✓ Setting IAM Policy...
-Done.
-Service [wagon-data-tpl-image] revision [wagon-data-tpl-image-00001-kup] has been deployed and is serving 100 percent of traffic.
-Service URL: https://wagon-data-tpl-image-xi54eseqrq-ew.a.run.app
-```
 
 ``` txt
 Creating cluster wagon-data-tpl-cluster in europe-west1... Cluster is being health-checked (master is healthy)...done.
@@ -177,10 +170,14 @@ export DEPLOYMENT_NAME=$DEPLOYMENT_NAME
 echo $DEPLOYMENT_NAME
 ```
 
+copy full image name from
+
+https://console.cloud.google.com/gcr/images/le-wagon-data/EU/wagon-data-tpl-image?project=le-wagon-data&gcrImageListsize=30
+
 deploy docker image to the cluster
 
 ``` bash
-kubectl create deployment $DEPLOYMENT_NAME --image gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+kubectl create deployment $DEPLOYMENT_NAME --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
 ```
 
 ``` bash
@@ -192,20 +189,24 @@ kubectl get svc --watch
 ```
 
 ``` txt
-NAME                 TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
-kubernetes           ClusterIP      10.111.240.1     <none>        443/TCP        18m
-ml-kube-deployment   LoadBalancer   10.111.246.169   <pending>     80:32076/TCP   9s
-```
-
-``` txt
 NAME                 TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
 kubernetes           ClusterIP      10.111.240.1     <none>          443/TCP        19m
 ml-kube-deployment   LoadBalancer   10.111.246.169   35.240.48.112   80:32076/TCP   48s
 ```
 
+### Troubleshoot
+
+``` bash
+gcloud container clusters list
+kubectl get pods
+kubectl describe pod ml-kube-deployment-67556cccc5-6ldwx
+```
+
+look at messages in the events
+
 ## Delete Google Kubernetes Engine cluster once usage is done
 
-delete the deployment
+delete the application on the cluster
 
 ```bash
 kubectl delete deployment $DEPLOYMENT_NAME
@@ -214,5 +215,5 @@ kubectl delete deployment $DEPLOYMENT_NAME
 delete the cluster
 
 ```bash
-gcloud container clusters delete ml-cluster
+gcloud container clusters delete $CLUSTER_NAME --region europe-west1
 ```
