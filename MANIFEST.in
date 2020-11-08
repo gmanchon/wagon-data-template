@@ -1,0 +1,3 @@
+include app.defaults.yaml
+include app.yaml
+include requirements.txt

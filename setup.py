@@ -8,4 +8,5 @@ setup(name="project",
       version="1.0",
       description="Package description",
       packages=find_packages(),
+      include_package_data=True,  # includes in package files from MANIFEST.in
       install_requires=requirements)
