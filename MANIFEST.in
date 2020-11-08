@@ -1,3 +1,5 @@
-include app.defaults.yaml
-include app.yaml
+include project/conf/app.defaults.yaml
+include project/conf/app.yaml
 include requirements.txt
+include data/data.csv
+include data/test_data.csv

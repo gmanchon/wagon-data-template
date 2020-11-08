@@ -1,5 +1,5 @@
 
-from project.conf import ConfLoader, ConfStruct
+from project.conf.conf import ConfLoader, ConfStruct
 
 from os.path import join, dirname
 

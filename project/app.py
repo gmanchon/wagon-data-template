@@ -1,5 +1,5 @@
 
-from project.conf import ConfLoader
+from project.conf.conf import ConfLoader
 from project.registry.registry import Registry
 from project.trainer.trainer import Trainer
 
@@ -35,9 +35,9 @@ class App:
         print(Fore.GREEN + "\nLoading configuration..."
               + Style.RESET_ALL)
 
-        project_path = dirname(dirname(__file__))
-        project_conf_path = join(project_path, 'app.yaml')
-        defaults_conf_path = join(project_path, 'app.defaults.yaml')
+        conf_path = join(dirname(__file__), "conf")
+        project_conf_path = join(conf_path, "app.yaml")
+        defaults_conf_path = join(conf_path, "app.defaults.yaml")
         self.conf_loader = ConfLoader(project_conf_path, defaults_conf_path)
         self.conf = self.conf_loader.conf
 
