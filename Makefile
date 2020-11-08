@@ -41,13 +41,55 @@ run:
 	python -m project.app $(reg)
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
-# gcp configuration
+# ai platform training
 
-show_gcp_env:
-	@echo "PROJECT_ID: ${PROJECT_ID}"
-	@echo "DOCKER_IMAGE_NAME: ${DOCKER_IMAGE_NAME}"
-	@echo "CLUSTER_NAME: ${CLUSTER_NAME}"
-	@echo "DEPLOYMENT_NAME: ${DEPLOYMENT_NAME}"
+show_aipf_env:
+	@echo ""
+	@echo "Code package:"
+	@echo "- PACKAGE_NAME: ${PACKAGE_NAME}"
+	@echo "- PACKAGE_ENTRY_POINT: ${PACKAGE_ENTRY_POINT}"
+	@echo ""
+	@echo "Training environment:"
+	@echo "- REGION: ${REGION}"
+	@echo "- PYTHON_VERSION: ${PYTHON_VERSION}"
+	@echo "- RUNTIME_VERSION: ${RUNTIME_VERSION}"
+	@echo ""
+	@echo "Training job:"
+	@echo "- JOB_PREFIX: ${JOB_PREFIX}"
+	@echo ""
+	@echo "Training storage:"
+	@echo "- BUCKET_NAME: ${BUCKET_NAME}"
+	@echo "- JOB_FOLDER: ${JOB_FOLDER}"
+
+JOB_NAME=${JOB_PREFIX}_$(shell date +'%Y%m%d_%H%M%S')
+
+gcp_submit_training:
+	gcloud ai-platform jobs submit training ${JOB_NAME} \
+		--job-dir "gs://${BUCKET_NAME}/${JOB_FOLDER}" \
+		--package-path ${PACKAGE_NAME} \
+		--module-name ${PACKAGE_NAME}.${PACKAGE_ENTRY_POINT} \
+		--region ${REGION} \
+		--python-version=${PYTHON_VERSION} \
+		--runtime-version=${RUNTIME_VERSION} \
+		--stream-logs
+
+# - - - - - - - - - - - - - - - - - - - - - - - -
+# gcp prod prediction
+
+show_prod_env:
+	@echo ""
+	@echo "Google Cloud Platform project:"
+	@echo "- PROJECT_ID: ${PROJECT_ID}"
+	@echo ""
+	@echo "Google Cloud Registry:"
+	@echo "- DOCKER_IMAGE_NAME: ${DOCKER_IMAGE_NAME}"
+	@echo ""
+	@echo "Google Kubernetes Engine:"
+	@echo "- CLUSTER_NAME: ${CLUSTER_NAME}"
+	@echo "- DEPLOYMENT_NAME: ${DEPLOYMENT_NAME}"
+
+show_gcp_conf:
+	gcloud config list
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # api
