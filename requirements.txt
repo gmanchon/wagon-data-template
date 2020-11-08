@@ -5,6 +5,7 @@ fsspec
 s3fs
 gcsfs
 google-cloud
+six>=1.13.0
 google-cloud-storage
 pygeohash
 category_encoders
