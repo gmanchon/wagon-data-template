@@ -23,6 +23,15 @@ make run reg=True                       # run trainer with registry
 make run_api
 ```
 
+## Train on AI Platform
+
+``` bash
+. ./make_gcp_env.sh                     # create env variables once configured
+make show_aipf_env                      # show ai platform env vars conf
+make show_prod_env                      # show gcr and gke env vars conf
+make show_gcp_conf                      # show gcp conf
+```
+
 ## Create a prediction API container image and use it locally
 
 build local image
