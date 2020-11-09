@@ -48,6 +48,8 @@ show_gcp_creds:
 
 show_aipf_env:
 	@echo ""
+	@echo "⚠️  In order to fill these, run \". ./make_gcp_env.sh\""
+	@echo ""
 	@echo "Code package:"
 	@echo "- PACKAGE_NAME: ${PACKAGE_NAME}"
 	@echo "- PACKAGE_ENTRY_POINT: ${PACKAGE_ENTRY_POINT}"
@@ -92,6 +94,8 @@ gcp_submit_registry:
 # gcp prod prediction
 
 show_prod_env:
+	@echo ""
+	@echo "⚠️  In order to fill these, run \". ./make_gcp_env.sh\""
 	@echo ""
 	@echo "Google Cloud Platform project:"
 	@echo "- PROJECT_ID: ${PROJECT_ID}"
