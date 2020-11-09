@@ -10,9 +10,14 @@ import pandas as pd
 from colorama import Fore, Style
 
 import os
+import sys
 
 
 REGISTRY_ENABLED = os.environ.get("reg")
+
+# ai pf does not allow to play with env vars easilly
+if "--reg=True" in sys.argv:
+    REGISTRY_ENABLED = True
 
 if REGISTRY_ENABLED:
 

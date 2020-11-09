@@ -73,6 +73,18 @@ gcp_submit_training:
 		--runtime-version=${RUNTIME_VERSION} \
 		--stream-logs
 
+gcp_submit_registry:
+	gcloud ai-platform jobs submit training ${JOB_NAME} \
+		--job-dir "gs://${BUCKET_NAME}/${JOB_FOLDER}" \
+		--package-path ${PACKAGE_NAME} \
+		--module-name ${PACKAGE_NAME}.${PACKAGE_ENTRY_POINT} \
+		--region ${REGION} \
+		--python-version=${PYTHON_VERSION} \
+		--runtime-version=${RUNTIME_VERSION} \
+		--stream-logs \
+		-- \
+		--reg=True
+
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # gcp prod prediction
 
