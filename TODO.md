@@ -32,7 +32,7 @@ code inspiration for data eng week challenge, source projects
 - [x] makefile: packages
 - [x] makefile: add pytest and pylint
 - [x] makefile: add test per directory
-- [ ] makefile: make activate_env directive does not work
+- [x] makefile: replace make activate_env directive by script shell
 - [ ] makefile: clean pylint
 
 - [x] notebook: load project
