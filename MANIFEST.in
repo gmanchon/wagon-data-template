@@ -1,4 +1,3 @@
-graft .git
 include project/conf/app.defaults.yaml
 include project/conf/app.yaml
 include requirements.txt
