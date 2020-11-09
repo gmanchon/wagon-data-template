@@ -14,10 +14,12 @@ import sys
 
 
 REGISTRY_ENABLED = os.environ.get("reg")
+IS_NO_GIT = False
 
 # ai pf does not allow to play with env vars easilly
 if "--reg=True" in sys.argv:
     REGISTRY_ENABLED = True
+    IS_NO_GIT = True
 
 if REGISTRY_ENABLED:
 
@@ -54,7 +56,9 @@ class App:
         print(Fore.GREEN + "\nLoading registry..."
               + Style.RESET_ALL)
 
-        self.registry = Registry(self.conf.registry, REGISTRY_ENABLED)
+        self.registry = Registry(self.conf.registry,
+                                 REGISTRY_ENABLED,
+                                 IS_NO_GIT)
 
         # getting data params
         data_params = self.params.get('data', dict())

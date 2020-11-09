@@ -12,6 +12,7 @@ category_encoders
 sklearn
 memoized_property
 mlflow
+uuid
 joblib
 flask
 uvicorn

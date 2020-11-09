@@ -1,4 +1,5 @@
 
+from project.registry.repositories.run_repository import RunRepository
 from project.registry.repositories.code_repository import CodeRepository
 from project.registry.repositories.model_repository import ModelRepository
 from project.registry.repositories.tracking_repository import TrackingRepository
@@ -6,9 +7,10 @@ from project.registry.repositories.tracking_repository import TrackingRepository
 
 class Registry():
 
-    def __init__(self, conf, enabled):
+    def __init__(self, conf, enabled, is_no_git):
 
         self.enabled = enabled
+        self.is_no_git = is_no_git
 
         # check whether registry is enabled
         if not self.enabled:
@@ -18,14 +20,17 @@ class Registry():
         self.conf = conf
         self.experiment = self.conf.experiment_name
 
+        # create run repository
+        self.run_repository = RunRepository()
+
         # create code repository
         self.code_repository = CodeRepository(conf.code)
 
         # get code storage location
-        code_storage_location = self.code_repository.get_storage_location()
+        code_storage_location = self.__get_storage_location()
 
         # get current run (current code commit hash)
-        self.run = self.code_repository.get_commit_hash()
+        self.run = self.__get_run_id()
 
         # create model repository
         self.model_repository = ModelRepository(
@@ -39,12 +44,28 @@ class Registry():
             conf.tracking, self.experiment, self.run,
             code_storage_location, model_storage_location)
 
+    def __get_storage_location(self):
+
+        # not retrieving storage location if git is not available
+        if self.is_no_git:
+            return "N/A"
+
+        return self.code_repository.get_storage_location()
+
     def is_git_status_clean(self):
+
+        # not checking status if git is not available
+        if self.is_no_git:
+            return True
 
         # return git status
         return self.code_repository.is_git_status_clean()
 
-    def get_commit_hash(self):
+    def __get_run_id(self):
+
+        # using run repo if git is not available
+        if self.is_no_git:
+            return self.run_repository.get_run_id()
 
         # return git status
         return self.code_repository.get_commit_hash()
