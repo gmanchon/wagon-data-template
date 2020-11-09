@@ -101,6 +101,7 @@ show_prod_env:
 	@echo "- DEPLOYMENT_NAME: ${DEPLOYMENT_NAME}"
 
 show_gcp_conf:
+	gcloud auth list
 	gcloud config list
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
