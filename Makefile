@@ -5,13 +5,20 @@ default: pylint pytest
 # Virtual env
 
 create_env:
-	pyenv virtualenv 3.8.5 taxifareproject
+	pyenv virtualenv ${VIRTUAL_ENV_PYTHON_VERSION} ${VIRTUAL_ENV_NAME}
 
 list_env:
 	pyenv versions
 
-activate_env:
-	pyenv activate taxifareproject
+show_project_env:
+	@echo ""
+	@echo "⚠️  In order to fill these, run \". ./make_project_env.sh\""
+	@echo "⚠️  Then in order to create env, run \"make create_env\""
+	@echo ""
+	@echo "Python version:"
+	@echo "- VIRTUAL_ENV_PYTHON_VERSION: ${VIRTUAL_ENV_PYTHON_VERSION}"
+	@echo "Virtual env:"
+	@echo "- VIRTUAL_ENV_NAME: ${VIRTUAL_ENV_NAME}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Packages
