@@ -1,5 +1,5 @@
 
-from project.data.data import get_data, clean_df
+from project.trainer.data import get_data, clean_df
 from project.trainer.pipeline import ProjectPipeline
 from project.trainer.metrics import compute_rmse
 

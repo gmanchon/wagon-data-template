@@ -121,12 +121,14 @@ class App:
 
     def head(self):
 
+        nrows = 10
+
         # reading local data
-        df = pd.read_csv(self.data_path, nrows=self.nrows)
+        df = pd.read_csv(self.data_path, nrows=nrows)
 
         print(Fore.GREEN + "\nDataset:\n"
               + Style.RESET_ALL
-              + "%s" % df.head(self.nrows))
+              + "%s" % df.head(nrows))
 
         return self
 
@@ -177,7 +179,7 @@ def main():
     if app.check_registry(REGISTRY_ENABLED):
 
         # app.fetch()
-        app.head()
+        # app.head()
         app.preprocess()
         app.train()
 
