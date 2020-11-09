@@ -43,6 +43,9 @@ run:
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # ai platform training
 
+show_gcp_creds:
+	cat ${GOOGLE_APPLICATION_CREDENTIALS}
+
 show_aipf_env:
 	@echo ""
 	@echo "Code package:"
