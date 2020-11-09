@@ -106,6 +106,7 @@ show_prod_env:
 show_gcp_conf:
 	gcloud auth list
 	gcloud config list
+	gcloud iam service-accounts list
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # api
