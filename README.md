@@ -139,6 +139,22 @@ Service URL: https://wagon-data-tpl-image-xi54eseqrq-ew.a.run.app
 
 you are now able to browse to the deployed url and make a prediction using the API notebook for GCR
 
+### Writing to GCS from GCR
+
+Dockerfile
+
+``` bash
+COPY /path/to/your/credentials.json /credentials.json
+```
+
+``` bash
+gcloud run deploy \
+    --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME \
+    --platform managed \
+    --region europe-west1 \
+    --GOOGLE_APPLICATION_CREDENTIALS="/credentials.json"
+```
+
 ## Deploy prediction API container image on Google Kubernetes Engine
 
 define a cluster name
