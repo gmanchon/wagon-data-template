@@ -100,6 +100,9 @@ gcp_submit_registry:
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # gcp prod prediction
 
+set_zone:
+	gcloud config set compute/zone ${REGION}
+
 show_prod_env:
 	@echo ""
 	@echo "⚠️  In order to fill these, run \". ./make_gcp_env.sh\""
