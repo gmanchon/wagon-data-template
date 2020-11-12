@@ -21,15 +21,6 @@ if "--reg=True" in sys.argv:
     REGISTRY_ENABLED = True
     IS_NO_GIT = True
 
-if REGISTRY_ENABLED:
-
-    print(Fore.GREEN + "\n✅ Registry enabled"
-          + Style.RESET_ALL)
-
-else:
-    print(Fore.GREEN + "\n❌ Registry disabled"
-          + Style.RESET_ALL)
-
 
 class App:
 

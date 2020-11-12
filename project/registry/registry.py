@@ -4,6 +4,8 @@ from project.registry.repositories.code_repository import CodeRepository
 from project.registry.repositories.model_repository import ModelRepository
 from project.registry.repositories.tracking_repository import TrackingRepository
 
+from colorama import Fore, Style
+
 
 class Registry():
 
@@ -11,6 +13,15 @@ class Registry():
 
         self.enabled = enabled
         self.is_no_git = is_no_git
+
+        if self.enabled:
+
+            print(Fore.GREEN + "\n✅ Registry enabled"
+                  + Style.RESET_ALL)
+
+        else:
+            print(Fore.GREEN + "\n❌ Registry disabled"
+                  + Style.RESET_ALL)
 
         # check whether registry is enabled
         if not self.enabled:
