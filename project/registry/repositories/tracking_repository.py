@@ -135,5 +135,5 @@ class TrackingRepository():
                 # iterate recursively through sub dictionary
                 self.mlflow_log_dict_param(value, key_radix + key)
             else:
-                # other datatypes are convertd to their string representation
+                # other datatypes are converted to their string representation
                 self.mlflow_log_param(key_radix + key, value)

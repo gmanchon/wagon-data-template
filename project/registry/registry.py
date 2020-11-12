@@ -9,7 +9,7 @@ from colorama import Fore, Style
 
 class Registry():
 
-    def __init__(self, conf, enabled, is_no_git):
+    def __init__(self, conf, enabled=True, is_no_git=True):
 
         self.enabled = enabled
         self.is_no_git = is_no_git
